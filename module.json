@@ -1,0 +1,144 @@
+{
+  "id": "akashic-magic",
+  "title": "Akashic Magic for PF1e",
+  "version": "0.0.1",
+  "relationships": {
+    "systems": [
+      {
+        "id": "pf1",
+        "type": "system",
+        "compatibility": {
+          "minimum": "10",
+          "verified": "11.8"
+        }
+      }
+    ],
+    "requires": [
+      {
+        "id": "lib-wrapper",
+        "type": "module",
+        "compatibility": {}
+      }
+    ]
+  },
+  "compatibility": {
+    "minimum": "13",
+    "verified": "13"
+  },
+  "languages": [
+    {
+      "lang": "en",
+      "name": "English",
+      "path": "lang/en.json",
+      "flags": {}
+    },
+    {
+      "lang": "es",
+      "name": "Español",
+      "path": "lang/es.json",
+      "flags": {}
+    }
+  ],
+  "esmodules": [
+    "scripts/akashic-magic.mjs"
+  ],
+  "styles": [
+    "styles/styles.css"
+  ],
+  "documentTypes": {
+    "Item": {
+      "veil": {
+        "htmlFields": [
+          "description.value"
+        ],
+        "filePathFields": {
+          "img": [
+            "IMAGE"
+          ]
+        }
+      }
+    }
+  },
+  "authors": [
+    {
+      "name": "YastMe",
+      "discord": "YastMe",
+      "flags": {}
+    }
+  ],
+  "packFolders": [
+    {
+      "name": "Akashic Magic",
+      "packs": [
+        "classes",
+        "veils",
+        "feats",
+        "traits",
+        "macros"
+      ],
+      "color": "#7B68EE",
+      "folders": []
+    }
+  ],
+  "packs": [
+    {
+      "name": "veils",
+      "label": "Veils",
+      "path": "packs/veils",
+      "type": "Item",
+      "system": "pf1",
+      "ownership": {
+        "PLAYER": "OBSERVER",
+        "ASSISTANT": "OWNER"
+      }
+    },
+    {
+      "name": "macros",
+      "label": "Macros",
+      "path": "packs/macros",
+      "type": "Macro",
+      "system": "pf1",
+      "ownership": {
+        "PLAYER": "OBSERVER",
+        "ASSISTANT": "OWNER"
+      }
+    },
+    {
+      "name": "traits",
+      "label": "Traits",
+      "path": "packs/traits",
+      "type": "Item",
+      "system": "pf1",
+      "ownership": {
+        "PLAYER": "OBSERVER",
+        "ASSISTANT": "OWNER"
+      }
+    },
+    {
+      "name": "feats",
+      "label": "Feats",
+      "path": "packs/feats",
+      "type": "Item",
+      "system": "pf1",
+      "ownership": {
+        "PLAYER": "OBSERVER",
+        "ASSISTANT": "OWNER"
+      }
+    },
+    {
+      "name": "classes",
+      "label": "Classes",
+      "path": "packs/classes",
+      "type": "Item",
+      "ownership": {
+        "PLAYER": "OBSERVER",
+        "ASSISTANT": "OWNER"
+      },
+      "system": "pf1"
+    }
+  ],
+  "bugs": "https://github.com/YastMe/akashic-magic/issues",
+  "url": "https://github.com/YastMe/akashic-magic",
+  "manifest": "",
+  "download": ""
+}
