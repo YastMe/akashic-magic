@@ -1,5 +1,5 @@
 
-pf1-pow
+akashic-magic
 =======
 
 This module aims to incorporate Dreamscarred Press' Akashic Magic system into the Pathfinder 1e system for FoundryVTT.
