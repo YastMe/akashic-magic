@@ -1,0 +1,75 @@
+//import { renderActorHook } from "./hooks/render/actor-sheet.mjs";
+import { renderItemHook } from "./hooks/render/item-sheet.mjs";
+import { readyHook } from "./hooks/ready.mjs";
+import { i18nHook } from "./hooks/i18n.mjs";
+import { initHook } from "./hooks/init.mjs";
+import { setupHook } from "./hooks/setup.mjs";
+import { onGetRollData } from "./utils.mjs";
+
+
+export const TEMPLATES = {
+    'akashic-magic': 'modules/akashic-magic/templates/actor/akashic-magic.hbs' // Akashic Magic Actor Sheet Tab
+}
+
+/**
+ * Module hooks for initialization, localization, and rendering.
+ */
+
+Hooks.once('setup', () => {
+	setupHook();
+});
+
+/**
+ * Executes when the module is initialized.
+ * It registers the configuration settings and item types for the module.
+ */
+Hooks.once("init", () => {
+	initHook();
+})
+
+/**
+ * Executes when the i18n localization system is initialized.
+ * It localizes the labels for maneuver types, save types, and save effects.
+ */
+Hooks.once("i18nInit", () => {
+	i18nHook();
+})
+
+/**
+ * Executes when all data is ready and the module is fully loaded.
+ * It registers the Maneuver Browser and performs migration tasks for old actors.
+ * Additionally, it shows a welcome dialog to users who have installed the module for the first time.
+ */
+Hooks.once("ready", () => {
+	readyHook();
+});
+
+/**
+ * Executes when the Actor sheet is rendered.
+ * It adds a custom "Browse" button for maneuvers to the Actor sheet UI.
+ * This button allows users to quickly access the Maneuver Browser from the Actor sheet.
+ * The button is styled and configured to trigger the `maneuverBrowser` function when clicked.
+
+Hooks.on("renderActorSheet", (app, html, data) => {
+	renderActorHook(data, app, html);
+});
+*/
+
+/**
+ * Executes when the Item sheet is rendered.
+ * It modifies the visibility of certain fields based on the type of maneuver being edited.
+ * Specifically, it hides or shows the save information and charges information based on the maneuver type and save type.
+ * It also adjusts the display of headers for save effects and charges.
+ */
+Hooks.on("renderItemSheet", (app, html, data) => {
+	renderItemHook(app, html);
+});
+
+
+/**
+ * Executes when RollData is requested.
+ * It adds the initiation modifier to the roll data for actors using the Path of War system.
+ * This allows for accurate calculations during combat and maneuver rolls.
+ *
+ */
+Hooks.on('pf1GetRollData', onGetRollData);

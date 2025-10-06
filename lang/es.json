@@ -1,1 +1,54 @@
-{}
+{
+  "TYPES": {
+    "Item": {
+        "akashic-magic": {
+            "veil": "Velo"
+        }
+    }
+  },
+  "AkashicMagic": {
+    "ChakraSlots": {
+      "Plural": "Ranuras de Chakra",
+      "Hands": "Manos",
+      "Feet": "Pies", 
+      "Head": "Cabeza",
+      "Wrists": "Muñecas",
+      "Shoulders": "Hombros",
+      "Headband": "Diadema",
+      "Neck": "Cuello",
+      "Belt": "Cinturón",
+      "Chest": "Pecho",
+      "Body": "Cuerpo",
+      "Label": "Ranuras de Chakra"
+    },
+    "Veils": {
+      "Name": {
+        "Plural": "Velos"
+      },
+      "SaveTypes": {
+        "Type": "Tipo de Salvación",
+        "fortitude": "Fortaleza",
+        "reflex": "Reflejos", 
+        "will": "Voluntad",
+        "none": "Ninguno",
+        "special": "Especial"
+      },
+      "SaveEffects": {
+        "half": "Mitad",
+        "negate": "Anular",
+        "partial": "Parcial",
+        "text": "Ver Texto"
+      }
+    },
+    "VeilFilter": {
+      "Label": "Ranuras de Chakra"
+    },
+    "Notifications": {
+      "VeilAlreadyShaped": "Este velo ya está formado en una ranura de chakra.",
+      "VeilNotShaped": "Este velo no está actualmente formado y no puede ser desformado.",
+      "VeilAlreadyBound": "Este velo ya está vinculado a una ranura de chakra.",
+      "VeilNotBound": "Este velo no está actualmente vinculado a ninguna ranura de chakra.",
+      "NegativeEssence": "No se puede invertir esencia negativa en un velo."
+    }
+  }
+}

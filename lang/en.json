@@ -1,1 +1,54 @@
-{}
+{
+  "TYPES": {
+    "Item": {
+        "akashic-magic": {
+            "veil": "Veil"
+        }
+    }
+  },
+  "AkashicMagic": {
+    "ChakraSlots": {
+      "Plural": "Chakra Slots",
+      "Hands": "Hands",
+      "Feet": "Feet", 
+      "Head": "Head",
+      "Wrists": "Wrists",
+      "Shoulders": "Shoulders",
+      "Headband": "Headband",
+      "Neck": "Neck",
+      "Belt": "Belt",
+      "Chest": "Chest",
+      "Body": "Body",
+      "Label": "Chakra Slots"
+    },
+    "Veils": {
+      "Name": {
+        "Plural": "Veils"
+      },
+      "SaveTypes": {
+        "Type": "Save Type",
+        "fortitude": "Fortitude",
+        "reflex": "Reflex", 
+        "will": "Will",
+        "none": "None",
+        "special": "Special"
+      },
+      "SaveEffects": {
+        "half": "Half",
+        "negate": "Negate",
+        "partial": "Partial",
+        "text": "See Text"
+      }
+    },
+    "VeilFilter": {
+      "Label": "Chakra Slots"
+    },
+    "Notifications": {
+      "VeilAlreadyShaped": "This veil is already shaped on a chakra slot.",
+      "VeilNotShaped": "This veil is not currently shaped and cannot be unshaped.",
+      "VeilAlreadyBound": "This veil is already bound to a chakra slot.",
+      "VeilNotBound": "This veil is not currently bound to any chakra slot.",
+      "NegativeEssence": "Cannot invest negative essence into a veil."
+    }
+  }
+}
