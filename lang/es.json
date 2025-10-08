@@ -38,10 +38,33 @@
         "negate": "Anular",
         "partial": "Parcial",
         "text": "Ver Texto"
+      },
+      "Descriptors": {
+        "Label": "Descriptores",
+        "Plural": "Descriptores"
       }
     },
     "VeilFilter": {
       "Label": "Ranuras de Chakra"
+    },
+    "ClassFilter": {
+      "Label": "Clases"
+    },
+    "DescriptorFilter": {
+      "Label": "Descriptores"
+    },
+    "TabName": "Velos",
+    "ClassVeils": "Velos de Clase",
+    "VeilEssence": "Esencia de Velo",
+    "VeilSlots": "Ranuras de Velo",
+    "Shaped": "Formado",
+    "VeilweaverLevel": {
+      "Single": "Nivel de Tejedor de Velos",
+      "Total": "Nivel Total de Tejedor de Velos"
+    },
+    "Attributes": {
+      "attr": "Atributo de Tejido de Velos",
+      "mod": "Modificador de Tejido de Velos"
     },
     "Notifications": {
       "VeilAlreadyShaped": "Este velo ya está formado en una ranura de chakra.",

@@ -38,10 +38,33 @@
         "negate": "Negate",
         "partial": "Partial",
         "text": "See Text"
+      },
+      "Descriptors": {
+        "Label": "Descriptors",
+        "Plural": "Descriptors"
       }
     },
     "VeilFilter": {
       "Label": "Chakra Slots"
+    },
+    "ClassFilter": {
+      "Label": "Classes"
+    },
+    "DescriptorFilter": {
+      "Label": "Descriptors"
+    },
+    "TabName": "Veils",
+    "ClassVeils": "Class Veils",
+    "VeilEssence": "Veil Essence",
+    "VeilSlots": "Veil Slots",
+    "Shaped": "Shaped",
+    "VeilweaverLevel": {
+      "Single": "Veilweaver Level",
+      "Total": "Total Veilweaver Level"
+    },
+    "Attributes": {
+      "attr": "Veilweaving Attribute",
+      "mod": "Veilweaving Modifier"
     },
     "Notifications": {
       "VeilAlreadyShaped": "This veil is already shaped on a chakra slot.",
