@@ -18,19 +18,22 @@ export function initHook() {
  * @returns {void}
  */
 function registerConfig() {
-    // Add Chakra Binds to config
+	// Add Chakra Binds to config
 	pf1.config.chakraSlots = {
 		Hands: "AkashicMagic.ChakraSlots.Hands",
-        Feet: "AkashicMagic.ChakraSlots.Feet",
-        Head: "AkashicMagic.ChakraSlots.Head",
-        Wrists: "AkashicMagic.ChakraSlots.Wrists",
-        Shoulders: "AkashicMagic.ChakraSlots.Shoulders",
-        Headband: "AkashicMagic.ChakraSlots.Headband",
-        Neck: "AkashicMagic.ChakraSlots.Neck",
-        Belt: "AkashicMagic.ChakraSlots.Belt",
-        Chest: "AkashicMagic.ChakraSlots.Chest",
-        Body: "AkashicMagic.ChakraSlots.Body"
+		Feet: "AkashicMagic.ChakraSlots.Feet",
+		Head: "AkashicMagic.ChakraSlots.Head",
+		Wrists: "AkashicMagic.ChakraSlots.Wrists",
+		Shoulders: "AkashicMagic.ChakraSlots.Shoulders",
+		Headband: "AkashicMagic.ChakraSlots.Headband",
+		Neck: "AkashicMagic.ChakraSlots.Neck",
+		Belt: "AkashicMagic.ChakraSlots.Belt",
+		Chest: "AkashicMagic.ChakraSlots.Chest",
+		Body: "AkashicMagic.ChakraSlots.Body"
 	};
+
+	pf1.config.akashicClasses = {};
+	pf1.config.veilDescriptors = {};
 
 	// Add save types to config
 	pf1.config.veilSaveTypes = {

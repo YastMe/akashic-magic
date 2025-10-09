@@ -25,23 +25,22 @@
     <label class="slots">
       <span class="value">
         {{#if system.chakraSlots.names}}
-          {{#each system.chakraSlots.names as |slot|}}
-            {{slot}}{{#unless @last}}, {{/unless}}
-          {{/each}}
+        {{#each system.chakraSlots.names as |slot|}}
+        {{slot}}{{#unless @last}}, {{/unless}}
+        {{/each}}
         {{else}}
-          <em>{{localize "PF1.None"}}</em>
+        <em>{{localize "PF1.None"}}</em>
         {{/if}}
       </span>
     </label>
-
-    <h5 class="saveHeader">{{localize "AkashicMagic.Veils.SaveTypes.Type"}}</h5>
-    <label class="save-type saveHeader">
-      <span class="saveHeader" class="value">{{system.saveType}} ({{system.saveEffect}})</span>
-    </label>
-    <h5 class="saveHeaderSpecial">{{localize "AkashicMagic.Veils.SaveTypes.Type"}}</h5>
-    <label class="save-type saveHeaderSpecial">
-      <span class="saveHeaderSpecial" class="value">{{system.saveType}}</span>
-    </label>
+    {{#if system.descriptors.names}}
+    <ul class="property-list descriptors tags" style="">
+      <h5>{{localize "AkashicMagic.Veils.Descriptors.Plural"}}</h5>
+      {{#each system.descriptors.names as |descriptor|}}
+      <li class="property generic-tag {{descriptor}}">{{descriptor}}</li>
+      {{/each}}
+    </ul>
+    {{/if}}
   </section>
 
   {{!-- Item Sheet Navigation --}}
@@ -57,21 +56,39 @@
 
     {{!-- Details Tab --}}
     <div class="tab details" data-group="primary" data-tab="details">
-    
-        {{!-- Chakra Slots --}}
-        <div class="form-group flexrow slots" style="">
+
+      {{!-- Chakra Slots --}}
+      <div class="form-group flexrow slots" style="">
         <label>{{localize "AkashicMagic.ChakraSlots.Label"}}</label>
         <div class="form-fields">
           <ul class="traits-list tag-list">
             {{#if system.chakraSlots.names}}
-              {{#each system.chakraSlots.names as |slot|}}
-                <li class="tag {{slot}}">{{slot}}</li> 
-              {{/each}}
+            {{#each system.chakraSlots.names as |slot|}}
+            <li class="tag {{slot}}">{{slot}}</li>
+            {{/each}}
             {{/if}}
           </ul>
-          <a class="trait-selector" data-title="AkashicMagic.ChakraSlots.Label" data-for="system.chakraSlots.base" data-options="chakraSlots" style=""><i class="fa-solid fa-edit" inert=""></i></a>
+          <a class="trait-selector" data-title="AkashicMagic.ChakraSlots.Label" data-for="system.chakraSlots.base"
+            data-options="chakraSlots" style=""><i class="fa-solid fa-edit" inert=""></i></a>
         </div>
       </div>
-    </div>
+
+      {{!-- Descriptors --}}
+      <div class="form-group flexrow descriptors" style="">
+        <div class="form-group flexrow descriptors" style="">
+          <label>{{localize "AkashicMagic.Veils.Descriptors.Label"}}</label>
+          <div class="form-fields">
+            <ul class="traits-list tag-list">
+              {{#if system.descriptors.names}}
+              {{#each system.descriptors.names as |descriptor|}}
+              <li class="tag {{descriptor}}">{{descriptor}}</li>
+              {{/each}}
+              {{/if}}
+            </ul>
+            <a class="trait-selector" data-title="PF1.DescriptorPlural" data-for="system.descriptors.base"
+              data-options="spellDescriptors"><i class="fa-solid fa-edit" inert=""></i></a>
+          </div>
+        </div>
+      </div>
   </section>
 </form>

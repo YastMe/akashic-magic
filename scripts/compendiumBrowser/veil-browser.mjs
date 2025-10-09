@@ -1,4 +1,4 @@
-import { SlotFilter } from "./veil-filter.mjs";
+import { VeilweaverFilter, SlotFilter, VeilDescriptorFilter } from "./veil-filter.mjs";
 
 const commonFilters = pf1.applications.compendiumBrowser.filters.common;
 
@@ -10,13 +10,13 @@ export class VeilFilter extends pf1.applications.compendiumBrowser.filters.BaseF
 export class VeilBrowser extends pf1.applications.compendiumBrowser.CompendiumBrowser {
     static documentName = "Item";
     static typeName = "AkashicMagic.Veils.Name.Plural";
-    static filterClasses = [commonFilters.TagFilter, SlotFilter];
+    static filterClasses = [commonFilters.TagFilter, VeilFilter, SlotFilter, VeilweaverFilter, VeilDescriptorFilter];
 }
 
 export function veilBrowser(event) {
     event.preventDefault();
     let type = event.target.dataset.category;
     if (type === undefined)
-        type = "akashic-magic.veil";
+        type = "veil";
     pf1.applications.compendiums[type].render(true, { focus: true });
 }

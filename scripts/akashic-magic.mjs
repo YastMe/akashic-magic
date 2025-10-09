@@ -1,4 +1,4 @@
-//import { renderActorHook } from "./hooks/render/actor-sheet.mjs";
+import { renderActorHook } from "./hooks/render/actor-sheet.mjs";
 import { renderItemHook } from "./hooks/render/item-sheet.mjs";
 import { readyHook } from "./hooks/ready.mjs";
 import { i18nHook } from "./hooks/i18n.mjs";
@@ -49,11 +49,11 @@ Hooks.once("ready", () => {
  * It adds a custom "Browse" button for maneuvers to the Actor sheet UI.
  * This button allows users to quickly access the Maneuver Browser from the Actor sheet.
  * The button is styled and configured to trigger the `maneuverBrowser` function when clicked.
-
+*/
 Hooks.on("renderActorSheet", (app, html, data) => {
 	renderActorHook(data, app, html);
 });
-*/
+
 
 /**
  * Executes when the Item sheet is rendered.
