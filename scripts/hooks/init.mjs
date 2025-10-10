@@ -7,7 +7,6 @@ import { VeilItem } from "../documents/_module.mjs";
 export function initHook() {
 	registerConfig();
 	registerItems();
-	registerChanges();
 	console.log(`${MODULE_ID} | Initialized`);
 }
 

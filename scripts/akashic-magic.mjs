@@ -4,7 +4,7 @@ import { readyHook } from "./hooks/ready.mjs";
 import { i18nHook } from "./hooks/i18n.mjs";
 import { initHook } from "./hooks/init.mjs";
 import { setupHook } from "./hooks/setup.mjs";
-import { handleJumpingToSummary } from "./utils.mjs";
+import { handleJumpingToSummary, injectVeilsButton } from "./utils.mjs";
 import { onGetRollData } from "./hooks/rollData.mjs";
 import { getChangeFlat } from "./hooks/changes.mjs";
 
@@ -47,11 +47,14 @@ Hooks.once("ready", () => {
 });
 
 /**
- * Executes when the Actor sheet is rendered.
- * It adds a custom "Browse" button for maneuvers to the Actor sheet UI.
- * This button allows users to quickly access the Maneuver Browser from the Actor sheet.
- * The button is styled and configured to trigger the `maneuverBrowser` function when clicked.
-*/
+ * Executes when the Compendium Directory is rendered.
+ * It injects a custom "Browse" button for veils into the Compendium Directory UI.
+ * This button allows users to quickly access the Veil Browser from the Compendium Directory.
+ */
+Hooks.on("renderCompendiumDirectory", async (app, html) => {
+	injectVeilsButton(html)
+})
+
 Hooks.on("renderActorSheet", (app, html, data) => {
 	renderActorHook(data, app, html);
 });

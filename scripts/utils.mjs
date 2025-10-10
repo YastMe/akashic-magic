@@ -1,3 +1,5 @@
+import { veilBrowser } from "./compendiumBrowser/veil-browser.mjs";
+
 export async function getVeilDocument(veilId, packName) {
     if (!packName) {
         return game.actors.get(veilId)?.items.get(veilId) || game.items.get(veilId);
@@ -131,4 +133,34 @@ export function handleJumpingToSummary() {
             input.blur();
         }
     }, 'MIXED');
+}
+
+export function injectVeilsButton(html) {
+	let footer;
+	if (html && typeof html.find === "function") {
+		footer = html.find(".directory-footer");
+		if (footer.length > 0) {
+			footer = footer[0];
+		} else {
+			footer = $("section.action-buttons")[0];
+		}
+	} else {
+		footer = $("section.action-buttons")[0];
+	}
+
+	if (!footer || footer.querySelector('button[data-category="veils"]')) return;
+
+	const button = document.createElement("button");
+	button.type = "button";
+	button.dataset.category = "veils";
+	button.classList.add("compendium", "veils");
+	button.innerText = game.i18n.localize("AkashicMagic.CompendiumButton");
+	footer.appendChild(button);
+	button.addEventListener("click", ev => {
+        ev.target.dataset.category = "veil";
+        veilBrowser(ev);
+    });
+    // Remove colspan-2 from previous button
+	if (footer.children.length % 2 === 0)
+        footer.children[footer.children.length - 2].classList.remove("colspan-2");
 }

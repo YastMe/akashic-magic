@@ -19,6 +19,8 @@
       "Belt": "Belt",
       "Chest": "Chest",
       "Body": "Body",
+      "Ring": "Ring",
+      "Blood": "Blood",
       "Label": "Chakra Slots"
     },
     "Veils": {
@@ -50,21 +52,50 @@
     "ClassFilter": {
       "Label": "Classes"
     },
+    "Classes": {
+      "Label": "Classes"
+    },
     "DescriptorFilter": {
       "Label": "Descriptors"
     },
     "TabName": "Veils",
-    "ClassVeils": "Class Veils",
+    "ClassVeils": "Known Veils",
+    "ShapedVeils": "Shaped Veils",
+    "NewVeil": "New Veil",
+    "BrowseCompendium": "Browse Compendium",
+    "CompendiumButton": "Search Veils",
     "VeilEssence": "Veil Essence",
     "VeilSlots": "Veil Slots",
+    "Essence": {
+      "Invested": "Invested Essence",
+      "MaxCapacity": "Max Essence Capacity",
+      "OverCapacity": "Over Capacity",
+      "InvestedTooltip": "@akasha.investedEssence",
+      "MaxCapacityTooltip": "@akasha.maxCapacity"
+    },
     "Shaped": "Shaped",
+    "Bound": "Bound",
+    "ShapeBindVeil": "Shape/Bind Veil",
+    "UnshapeVeil": "Unshape Veil",
+    "RearrangeVeil": "Rearrange Veil",
     "VeilweaverLevel": {
       "Single": "Veilweaver Level",
-      "Total": "Total Veilweaver Level"
+      "Total": "Total Veilweaver Level",
+      "Tooltip": "@akasha.veilweavingLevel"
     },
     "Attributes": {
       "attr": "Veilweaving Attribute",
-      "mod": "Veilweaving Modifier"
+      "mod": "Veilweaving Modifier",
+      "veilweavingAttr": "Veilweaving Attribute",
+      "veilweavingAttrTooltip": "@akasha.veilweavingAttr"
+    },
+    "BuffCategories": {
+      "akasha": "Akashic Magic"
+    },
+    "BuffTargets": {
+      "VeilweaverLevel": "Veilweaver Level",
+      "MaxCapacity": "Max Essence Capacity",
+      "VeilweavingModifier": "Veilweaving Modifier"
     },
     "Notifications": {
       "VeilAlreadyShaped": "This veil is already shaped on a chakra slot.",
@@ -72,6 +103,17 @@
       "VeilAlreadyBound": "This veil is already bound to a chakra slot.",
       "VeilNotBound": "This veil is not currently bound to any chakra slot.",
       "NegativeEssence": "Cannot invest negative essence into a veil."
+    },
+    "Dialogs": {
+      "ShapeBindVeilTitle": "Shape/Bind Veil",
+      "ShapeTo": "Shape To:",
+      "BindTo": "Bind To:",
+      "SelectSlot": "-- Select Slot --",
+      "Confirm": "Confirm",
+      "Cancel": "Cancel"
+    },
+    "Config": {
+      "Name": "Akashic Magic Settings"
     }
   }
 }

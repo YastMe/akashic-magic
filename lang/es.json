@@ -19,6 +19,8 @@
       "Belt": "Cinturón",
       "Chest": "Pecho",
       "Body": "Cuerpo",
+      "Ring": "Anillo",
+      "Blood": "Sangre",
       "Label": "Ranuras de Chakra"
     },
     "Veils": {
@@ -50,21 +52,50 @@
     "ClassFilter": {
       "Label": "Clases"
     },
+    "Classes": {
+      "Label": "Clases"
+    },
     "DescriptorFilter": {
       "Label": "Descriptores"
     },
     "TabName": "Velos",
-    "ClassVeils": "Velos de Clase",
+    "ClassVeils": "Velos Conocidos",
+    "ShapedVeils": "Velos Formados",
+    "NewVeil": "Nuevo Velo",
+    "BrowseCompendium": "Explorar Compendio",
+    "CompendiumButton": "Buscar Velos",
     "VeilEssence": "Esencia de Velo",
     "VeilSlots": "Ranuras de Velo",
+    "Essence": {
+      "Invested": "Esencia Invertida",
+      "MaxCapacity": "Capacidad Máxima de Esencia",
+      "OverCapacity": "Sobre Capacidad",
+      "InvestedTooltip": "@akasha.investedEssence",
+      "MaxCapacityTooltip": "@akasha.maxCapacity"
+    },
     "Shaped": "Formado",
+    "Bound": "Vinculado",
+    "ShapeBindVeil": "Formar/Vincular Velo",
+    "UnshapeVeil": "Desformar Velo",
+    "RearrangeVeil": "Reorganizar Velo",
     "VeilweaverLevel": {
       "Single": "Nivel de Tejedor de Velos",
-      "Total": "Nivel Total de Tejedor de Velos"
+      "Total": "Nivel Total de Tejedor de Velos",
+      "Tooltip": "@akasha.veilweavingLevel"
     },
     "Attributes": {
       "attr": "Atributo de Tejido de Velos",
-      "mod": "Modificador de Tejido de Velos"
+      "mod": "Modificador de Tejido de Velos",
+      "veilweavingAttr": "Atributo de Tejido de Velos",
+      "veilweavingAttrTooltip": "@akasha.veilweavingAttr"
+    },
+    "BuffCategories": {
+      "akasha": "Magia Akáshica"
+    },
+    "BuffTargets": {
+      "VeilweaverLevel": "Nivel de Tejedor de Velos",
+      "MaxCapacity": "Capacidad Máxima de Esencia",
+      "VeilweavingModifier": "Modificador de Tejido de Velos"
     },
     "Notifications": {
       "VeilAlreadyShaped": "Este velo ya está formado en una ranura de chakra.",
@@ -72,6 +103,17 @@
       "VeilAlreadyBound": "Este velo ya está vinculado a una ranura de chakra.",
       "VeilNotBound": "Este velo no está actualmente vinculado a ninguna ranura de chakra.",
       "NegativeEssence": "No se puede invertir esencia negativa en un velo."
+    },
+    "Dialogs": {
+      "ShapeBindVeilTitle": "Formar/Vincular Velo",
+      "ShapeTo": "Formar En:",
+      "BindTo": "Vincular A:",
+      "SelectSlot": "-- Seleccionar Ranura --",
+      "Confirm": "Confirmar",
+      "Cancel": "Cancelar"
+    },
+    "Config": {
+      "Name": "Configuración de Magia Akáshica"
     }
   }
 }

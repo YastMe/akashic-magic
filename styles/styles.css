@@ -1,7 +1,7 @@
 .veilsummary {
-	display: flex;
-	flex-flow: row nowrap;
-	gap: 3px;
+    display: flex;
+    flex-flow: row nowrap;
+    gap: 3px;
 }
 
 .accordion {
@@ -11,14 +11,21 @@
     transition: max-height 0.4s ease;
     overflow: hidden;
     max-height: 0px;
-	padding: 0 !important;
-	border-top: 0 !important;
+    padding: 0 !important;
+    border-top: 0 !important;
     gap: 3px;
 }
 
 .accordion.open {
-      flex: 0 0 100%;
-      font-size: var(--font-size-12);
-      line-height: 1.5;
-	  gap: 3px;
+    flex: 0 0 100%;
+    font-size: var(--font-size-12);
+    line-height: 1.5;
+    gap: 3px;
+    overflow-y: scroll;
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+}
+
+.accordion::-webkit-scrollbar {
+    display: none;
 }
