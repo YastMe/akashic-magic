@@ -148,16 +148,15 @@ export function injectVeilsButton(html) {
 		footer = $("section.action-buttons")[0];
 	}
 
-	if (!footer || footer.querySelector('button[data-category="veils"]')) return;
+	if (!footer || footer.querySelector('button[data-category="veil"]')) return;
 
 	const button = document.createElement("button");
 	button.type = "button";
-	button.dataset.category = "veils";
-	button.classList.add("compendium", "veils");
+	button.dataset.category = "veil";
+	button.classList.add("compendium", "veil");
 	button.innerText = game.i18n.localize("AkashicMagic.CompendiumButton");
 	footer.appendChild(button);
 	button.addEventListener("click", ev => {
-        ev.target.dataset.category = "veil";
         veilBrowser(ev);
     });
     // Remove colspan-2 from previous button
