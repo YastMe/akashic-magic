@@ -11,4 +11,10 @@ export function i18nHook() {
     for (let r of Object.values(pf1.config.veilSaveEffects)) {
 		r.label = game.i18n.localize(r.label);
     }
+	for (let r of Object.values(pf1.config.buffTargetCategories)) {
+		r.label = game.i18n.localize(r.label);
+	}
+	for (let r of Object.values(pf1.config.buffTargets)) {
+		r.label = game.i18n.localize(r.label);
+	}
 }

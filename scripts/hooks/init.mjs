@@ -7,6 +7,7 @@ import { VeilItem } from "../documents/_module.mjs";
 export function initHook() {
 	registerConfig();
 	registerItems();
+	registerChanges();
 	console.log(`${MODULE_ID} | Initialized`);
 }
 
@@ -20,16 +21,18 @@ export function initHook() {
 function registerConfig() {
 	// Add Chakra Binds to config
 	pf1.config.chakraSlots = {
-		Hands: "AkashicMagic.ChakraSlots.Hands",
+		Belt: "AkashicMagic.ChakraSlots.Belt",
+		Blood: "AkashicMagic.ChakraSlots.Blood",
+		Body: "AkashicMagic.ChakraSlots.Body",
+		Chest: "AkashicMagic.ChakraSlots.Chest",
 		Feet: "AkashicMagic.ChakraSlots.Feet",
+		Hands: "AkashicMagic.ChakraSlots.Hands",
 		Head: "AkashicMagic.ChakraSlots.Head",
-		Wrists: "AkashicMagic.ChakraSlots.Wrists",
-		Shoulders: "AkashicMagic.ChakraSlots.Shoulders",
 		Headband: "AkashicMagic.ChakraSlots.Headband",
 		Neck: "AkashicMagic.ChakraSlots.Neck",
-		Belt: "AkashicMagic.ChakraSlots.Belt",
-		Chest: "AkashicMagic.ChakraSlots.Chest",
-		Body: "AkashicMagic.ChakraSlots.Body"
+		Ring: "AkashicMagic.ChakraSlots.Ring",
+		Shoulders: "AkashicMagic.ChakraSlots.Shoulders",
+		Wrists: "AkashicMagic.ChakraSlots.Wrists"
 	};
 
 	pf1.config.akashicClasses = {};
@@ -68,6 +71,26 @@ function registerConfig() {
 		Text: {
 			label: "AkashicMagic.Veils.SaveEffects.text",
 		},
+	};
+
+	pf1.config.buffTargetCategories.akasha = {
+		label: "AkashicMagic.BuffCategories.akasha",
+		filters: {}
+	}
+
+	pf1.config.buffTargets.akshveilweavingLevel = {
+		label: "AkashicMagic.BuffTargets.VeilweaverLevel",
+		category: "akasha"
+	};
+
+	pf1.config.buffTargets.akshmaxCapacity = {
+		label: "AkashicMagic.BuffTargets.MaxCapacity",
+		category: "akasha"
+	};
+
+	pf1.config.buffTargets.akshveilweavingAttr = {
+		label: "AkashicMagic.BuffTargets.VeilweavingModifier",
+		category: "akasha"
 	};
 }
 

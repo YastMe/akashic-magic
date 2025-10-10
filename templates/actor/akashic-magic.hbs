@@ -2,83 +2,146 @@
     <header class="flexcol akashic-magic-header" style="gap: 3px;">
         <div class="veilsummary">
             {{#if actor._rollData.akasha.veilweavingLevel}}
-            <div data-tooltip="{{localize 'AkashicMagic.VeilweaverLevel.Total'}}" class="info-box veilweaver-level">
+            <div data-tooltip="{{localize 'AkashicMagic.VeilweaverLevel.Tooltip'}}" class="info-box veilweaver-level">
                 <h5><a disabled>{{localize "AkashicMagic.VeilweaverLevel.Single"}}</a></h5>
                 <span class="value">{{actor._rollData.akasha.veilweavingLevel}}</span>
             </div>
             {{/if}}
             <div class="info-box veilweaving-attr">
                 <h5><a disabled>{{localize 'AkashicMagic.Attributes.mod'}}</a></h5>
-                <span class="value">+{{actor._rollData.akasha.veilweavingAttr}}</span>
+                <span class="value" data-tooltip="{{localize 'AkashicMagic.Attributes.veilweavingAttrTooltip'}}">+{{actor._rollData.akasha.veilweavingAttr}}</span>
+            </div>
+            <div class="info-box invested-essence">
+                <h5><a disabled>{{localize 'AkashicMagic.Essence.Invested'}}</a></h5>
+                <span class="value"
+                    data-tooltip="{{localize 'AkashicMagic.Essence.InvestedTooltip'}}">{{actor._rollData.akasha.investedEssence}}
+                    / {{actor._rollData.akasha.essence}}</span>
+            </div>
+            <div class="info-box max-capacity">
+                <h5><a disabled>{{localize 'AkashicMagic.Essence.MaxCapacity'}}</a></h5>
+                <span class="value"
+                    data-tooltip="{{localize 'AkashicMagic.Essence.MaxCapacityTooltip'}}">{{actor._rollData.akasha.maxCapacity}}</span>
             </div>
         </div>
     </header>
 
-    {{!-- Veils List --}}
-    <div class="veil-list-container">
+    <ol class="item-groups-list veil-body">
+        {{!-- Shaped Veils --}}
         <ol class="item-list">
-            <li class="flexrow item-list-header veil-header veil-control" name="showVeils">
+            <li class="flexrow item-list-header">
                 <div class="item-name">
-                    <h3>{{localize "AkashicMagic.ClassVeils"}}</h3>
+                    <h3>{{localize "AkashicMagic.ShapedVeils"}}</h3>
                 </div>
-                <div class="item-detail item-actions">
-                    <i class="icon-pf icon-gears" data-tooltip="PF1.ActionPlural"></i>
+                <div class="item-detail essence">
+                    <i class="icon-pf icon-battery-pack"
+                        data-tooltip='{{localize "AkashicMagic.Essence.Invested"}}'></i>
                 </div>
-                <div class="item-detail veil-essence">
-                    <i class="icon-pf icon-battery-pack" data-tooltip='{{localize "AkashicMagic.VeilEssence"}}'></i>
+                <div class="item-detail veil-slot" style="flex-basis:15%">
+                    <i class="icon-pf icon-battle-gear"
+                        data-tooltip='{{localize "AkashicMagic.ChakraSlots.Plural"}}'></i>
                 </div>
-                <div class="item-detail veil-slots" style="flex-basis:15%">
-                    <i class="icon-pf icon-battle-gear" data-tooltip='{{localize "AkashicMagic.VeilSlots"}}'></i>
+                <div class="item-controls veil-controls" style="flex-basis: 10%;">
+                    <a class="veil-control item-control item-create" data-tooltip="PF1.CreateItem" name="create"
+                        id="create"><i class="fa-solid fa-plus"></i></a>
                 </div>
             </li>
-            {{#each (getClassVeils actor) as |veil|}}
-            <li class="item flexrow" id="{{veil.id}}" draggable="true" style="">
+            {{#each actor.items as |veil|}}
+            {{#if (eq veil.type "akashic-magic.veil")}}
+            {{#if veil.system.shaped}}
+            <li class="item flexrow" id="{{veil.id}}" draggable="true">
                 <div class="item-name">
                     <a class="item-image veil-control" style="background-image: url({{veil.img}});"
                         data-tooltip="PF1.DisplayInChat" name="display" id="{{veil.id}}"></a>
-                    <a class="veil-control" name="veilName" id="{{veil.id}}">
+                    <a class="veil-control" name="veilName" id="{{veil.id}}" dataset-pack="{{veil.pack}}">
                         <h4 class="">
                             {{veil.name}}
                         </h4>
                     </a>
                 </div>
-
-                <div class="item-detail veil-uses flexrow">
-                    <a id="{{veil.id}}" class="item-control veil-control item-toggle-shaped enabled" name="shaped"
-                        data-tooltip="AkashicMagic.Shaped">
-                        <i class="fa-solid fa-cog veil-icon prepared" inert=""></i>
+                <div class="item-detail essence veil-control" name="setEssence" id="{{veil.id}}">
+                    <input type="text" name="system.investedEssence" value="{{veil.system.investedEssence}}" size="12"
+                        id="{{veil.id}}" onfocus="this.select()" {{#if (gt veil.system.investedEssence
+                        @root.actor._rollData.akasha.maxCapacity)}} style="color: red;"
+                        data-tooltip="{{localize 'AkashicMagic.Essence.OverCapacity'}}" {{else}}
+                        data-tooltip="{{localize 'AkashicMagic.Essence.Invested'}}" {{/if}} />
+                </div>
+                <div class="item-detail veil-slot tooltip" style="flex-basis:15%">
+                    {{#unless veil.system.bound}}
+                    <span data-tooltip="{{localize 'AkashicMagic.Shaped'}}">{{veil.system.shapedTo}}</span>
+                    {{else}}
+                    <span data-tooltip="{{localize 'AkashicMagic.Bound'}}">{{veil.system.boundTo}} ({{localize
+                        'AkashicMagic.Bound'}})</span>
+                    {{/unless}}
+                </div>
+                <div class="item-controls" style="flex-basis: 10%;">
+                    <a class="veil-control item-control item-rearrange" data-tooltip="{{localize 'AkashicMagic.RearrangeVeil'}}"
+                        name="rearrange" id="{{veil.id}}"><i class="fa-solid fa-shuffle"></i></a>
+                    <a class="veil-control item-control item-unshape"
+                        data-tooltip="{{localize 'AkashicMagic.UnshapeVeil'}}" name="unshape" id="{{veil.id}}"><i
+                            class="fa-solid fa-link-slash"></i>
                     </a>
-                </div>
-
-                <div class="item-detail item-actions">
-                    <div class="item-action">
-                        <a class="item-control item-action action roll veil-control" name="use" id="{{veil.id}}">
-                            <i class="fa-solid fa-dice-d20" inert=""></i>
-                        </a>
-                    </div>
-                </div>
-
-                <div class="item-detail veil-uses flexrow">
-                    <div><span class="text-box" data-type="amount"
-                            data-dtype="Number">{{veil.system.investedEssence}}</span>
-                    </div>
-                    <span class="sep"> / </span>
-                    <div><span class="text-box" data-type="max" data-dtype="Number">1</span>
-                    </div>
-                </div>
-                <div class="item-detail veil-slots"><span
-                        data-tooltip="{{#each veil.system.slots as |slot|}} {{slot}} {{/each}}">{{#each
-                        veil.system.slots as |slot|}} {{slot}} {{/each}}</span>
+                    <a class="veil-control item-control item-delete" data-tooltip="PF1.DeleteItem" name="delete"
+                        id="{{veil.id}}"><i class="fa-solid fa-trash"></i>
+                    </a>
                 </div>
                 <div class="identified item-summary accordion" id="veil-summary-{{veil.id}}">
                     <div class="description identified">
-                        <div class="description-body">
-                            {{veil.system.description.value}}
-                        </div>
+                        <div class="description-body"></div>
                     </div>
                 </div>
             </li>
+            {{/if}}
+            {{/if}}
             {{/each}}
         </ol>
-    </div>
+
+        {{!-- Known Veils --}}
+        <ol class="item-list">
+            <li class="flexrow item-list-header">
+                <div class="item-name">
+                    <a class="veil-control veil-header" name="showVeils">
+                        <h3>{{localize "AkashicMagic.ClassVeils"}}</h3>
+                    </a>
+                </div>
+                <div class="item-controls" style="flex-basis: 10%;">
+                    <a class="veil-control item-control item-create" data-tooltip="PF1.CreateItem" name="createUnshaped"
+                        id="create"><i class="fa-solid fa-plus"></i></a>
+                    <a class="item-control item-search veil-control"
+                        data-tooltip="{{localize 'AkashicMagic.BrowseCompendium'}}" name="browse" id="browse">
+                        <i class="fas fa-folder-plus"></i>
+                    </a>
+                </div>
+            </li>
+            <div class="accordion veil-list">
+                {{#each (getActorVeils actor) as |veil|}}
+                {{#unless veil.shaped}}
+                <li class="item flexrow" id="{{veil.id}}" draggable="true" style="">
+                    <div class="item-name">
+                        <a class="veil-control" name="veilName" id="{{veil.id}}" dataset-pack="{{veil.pack}}">
+                            <h4 class="">
+                                {{veil.name}}
+                            </h4>
+                        </a>
+                    </div>
+                    <div class="item-controls" style="flex-basis: 10%;">
+                        <a class="veil-control" name="shapeBindVeil" id="{{veil.id}}">
+                            <i class="fa-solid fa-link" data-tooltip="{{localize 'AkashicMagic.ShapeBindVeil'}}"></i>
+                        </a>
+                        {{#if veil.actorItem}}
+                        <a class="veil-control item-control item-delete" data-tooltip="PF1.DeleteItem" name="delete"
+                            id="{{veil.id}}"><i class="fa-solid fa-trash"></i>
+                        </a>
+                        {{/if}}
+                    </div>
+                    <div class="identified item-summary accordion" id="veil-summary-{{veil.id}}">
+                        <div class="description identified">
+                            <div class="description-body"></div>
+                        </div>
+                    </div>
+                </li>
+                {{/unless}}
+                {{/each}}
+            </div>
+        </ol>
+    </ol>
 </div>

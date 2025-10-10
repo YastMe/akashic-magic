@@ -57,6 +57,22 @@
     {{!-- Details Tab --}}
     <div class="tab details" data-group="primary" data-tab="details">
 
+      {{!-- Classes --}}
+      <div class="form-group flexrow classes" style="">
+        <label>{{localize "AkashicMagic.Classes.Label"}}</label>
+        <div class="form-fields">
+          <ul class="traits-list tag-list">
+            {{#if system.classes.names}}
+            {{#each system.classes.names as |class|}}
+            <li class="tag {{class}}">{{class}}</li>
+            {{/each}}
+            {{/if}}
+          </ul>
+          <a class="trait-selector" data-title="AkashicMagic.Classes.Label" data-for="system.classes.base"
+            data-options="akashicClasses" style=""><i class="fa-solid fa-edit" inert=""></i></a>
+        </div>
+      </div>
+
       {{!-- Chakra Slots --}}
       <div class="form-group flexrow slots" style="">
         <label>{{localize "AkashicMagic.ChakraSlots.Label"}}</label>

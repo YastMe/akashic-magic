@@ -21,6 +21,7 @@ export class VeilModel extends VeilItemModel {
             saveType: new fields.StringField({ required: true, initial: "none" }),
             saveEffect: new fields.StringField({ required: true, initial: "none" }),
             shaped: new fields.BooleanField({ required: false, initial: false }),
+            shapedTo: new fields.StringField({ required: false, initial: "" }),
             bound: new fields.BooleanField({ required: false, initial: false }),
             boundTo: new fields.StringField({ required: false, initial: "" }),
             classes: new fields.SchemaField({

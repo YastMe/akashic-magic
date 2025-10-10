@@ -4,7 +4,9 @@ import { readyHook } from "./hooks/ready.mjs";
 import { i18nHook } from "./hooks/i18n.mjs";
 import { initHook } from "./hooks/init.mjs";
 import { setupHook } from "./hooks/setup.mjs";
-import { onGetRollData } from "./utils.mjs";
+import { handleJumpingToSummary } from "./utils.mjs";
+import { onGetRollData } from "./hooks/rollData.mjs";
+import { getChangeFlat } from "./hooks/changes.mjs";
 
 
 export const TEMPLATES = {
@@ -73,3 +75,14 @@ Hooks.on("renderItemSheet", (app, html, data) => {
  *
  */
 Hooks.on('pf1GetRollData', onGetRollData);
+
+Hooks.on("pf1GetChangeFlat", getChangeFlat);
+
+/**
+ * This is a fix to handle the sheet jumping to the Summary tab
+ * when a new maneuver is added.
+ * @credit McGreger
+ */
+Hooks.once("libWrapper.Ready", () => {
+	handleJumpingToSummary();
+});

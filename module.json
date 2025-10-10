@@ -104,9 +104,9 @@
       }
     },
     {
-      "name": "traits",
-      "label": "Traits",
-      "path": "packs/traits",
+      "name": "races",
+      "label": "Races",
+      "path": "packs/races",
       "type": "Item",
       "system": "pf1",
       "ownership": {
