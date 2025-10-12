@@ -106,5 +106,18 @@
           </div>
         </div>
       </div>
+
+      {{!-- Save type --}}
+      <div class="form-group">
+        <label>{{localize "AkashicMagic.Veils.SaveType.Label"}}</label>
+        <div class="form-fields">
+          <select name="system.saveType">
+            {{selectOptions config.veilSaveTypes selected=system.saveType labelAttr="label"}}
+          </select>
+          <select name="system.saveEffect">
+            {{selectOptions config.veilSaveEffects selected=system.saveEffect labelAttr="label"}}
+          </select>
+        </div>
+      </div>
   </section>
 </form>

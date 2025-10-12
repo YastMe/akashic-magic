@@ -1,5 +1,5 @@
 import { TEMPLATES } from "../akashic-magic.mjs";
-import { cleanDice, getActorVeils } from "../utils.mjs";
+import { cleanDice } from "../utils.mjs";
 
 export function setupHook() {
 	loadTemplates(TEMPLATES);
@@ -7,9 +7,6 @@ export function setupHook() {
 		if (value === "name")
 			return obj.get(key)?.name;
 		return obj.get(key)?.system?.uses[value] || 0;
-	});
-	Handlebars.registerHelper('getActorVeils', function (actor) {
-		return getActorVeils(actor);
 	});
 	Handlebars.registerHelper('cleanDiceAkashic', function (haystack) {
 		return cleanDice(haystack);

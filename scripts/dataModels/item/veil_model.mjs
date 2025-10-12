@@ -18,8 +18,8 @@ export class VeilModel extends VeilItemModel {
                 standard: new fields.SetField(new fields.StringField({ required: true, initial: "" })),
                 total: new fields.SetField(new fields.StringField({ required: true, initial: "" })),
             }),
-            saveType: new fields.StringField({ required: true, initial: "none" }),
-            saveEffect: new fields.StringField({ required: true, initial: "none" }),
+            saveType: new fields.StringField({ required: true, initial: "None" }),
+            saveEffect: new fields.StringField({ required: true, initial: "None" }),
             shaped: new fields.BooleanField({ required: false, initial: false }),
             shapedTo: new fields.StringField({ required: false, initial: "" }),
             bound: new fields.BooleanField({ required: false, initial: false }),
@@ -32,6 +32,7 @@ export class VeilModel extends VeilItemModel {
                 total: new fields.SetField(new fields.StringField({ required: true, initial: "" })),
             }),
             investedEssence: new fields.NumberField({ required: false, initial: 0 }),
+            isPassionVeil: new fields.BooleanField({ required: false, initial: false }),
         };
         this.addDefaultSchemaFields(schema);
         return schema;

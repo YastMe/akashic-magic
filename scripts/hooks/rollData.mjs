@@ -10,27 +10,30 @@ export function onGetRollData(doc, rollData) {
 
             const hasVeils = items.some(i => i.type === "akashic-magic.veil" || i.type === "veil");
 
-            const isAkashicClass = items.some(i => {
-                if (i.type !== "feat") return false;
+            const isVeilweaver = items.some(i => {
+                if (i.type !== "feat" && i.type !== "class") return false;
                 const name = i.name.toLowerCase();
-                return name.includes("veilweaving") || name.includes("veil");
+                return name.includes("veilweaving") || name.includes("veil") || Object.values(pf1.config.akashicClasses).some(c => c.toLowerCase() === name);
             });
 
-            if (hasVeils || isAkashicClass)
+            if (hasVeils || isVeilweaver)
                 actor.setFlag(MODULE_ID, "veilweaver", true);
-
-            else
+            else {
+                actor.setFlag(MODULE_ID, "veilweaver", false);
                 return;
+            }
 
-            if (isAkashicClass) {
+            if (isVeilweaver) {
                 const classLevels = items.filter(i => i.type === "class").map(i => {
                     return i.system?.level ?? 0;
                 });
+
                 const veilweavingLevel = classLevels.reduce((a, b) => a + b, 0);
                 if (rollData.akasha.veilweavingLevel === undefined)
                     rollData.akasha.veilweavingLevel = veilweavingLevel;
                 else
                     rollData.akasha.veilweavingLevel += veilweavingLevel;
+
                 // Max Capacity
                 let maxCapacity = 1;
                 if (veilweavingLevel < 6) {
@@ -56,33 +59,42 @@ export function onGetRollData(doc, rollData) {
                 } else {
                     maxCapacity = 11;
                 }
+
                 if (rollData.akasha.maxCapacity === undefined)
                     rollData.akasha.maxCapacity = maxCapacity;
                 else
                     rollData.akasha.maxCapacity += maxCapacity;
-            }
 
-            // Veilweaving attribute
-            const veilweavingAttr = actor.getFlag(MODULE_ID, "veilweavingAttr");
-            if (veilweavingAttr && actor._rollData.abilities[veilweavingAttr])
-                if (rollData.akasha.veilweavingAttr === undefined)
-                    rollData.akasha.veilweavingAttr = actor._rollData.abilities[veilweavingAttr].mod || 0;
+                if (rollData.akasha.passionCapacity === undefined)
+                    rollData.akasha.passionCapacity = maxCapacity;
                 else
-                    rollData.akasha.veilweavingAttr += actor._rollData.abilities[veilweavingAttr].mod || 0;
+                    rollData.akasha.passionCapacity += maxCapacity;
 
-            // Essence and invested essence
-            const veils = items.filter(i => i.type === "akashic-magic.veil" || i.type === "veil");
-            let totalInvestedEssence = 0;
-            veils.forEach(v => {
-                const invested = v.system?.investedEssence ?? 0;
-                totalInvestedEssence += invested;
-            });
-            rollData.akasha.investedEssence = totalInvestedEssence;
+                // Veilweaving attribute
+                const veilweavingAttr = actor.getFlag(MODULE_ID, "veilweavingAttr");
+                if (veilweavingAttr && actor._rollData.abilities[veilweavingAttr])
+                    if (rollData.akasha.veilweavingAttr === undefined)
+                        rollData.akasha.veilweavingAttr = actor._rollData.abilities[veilweavingAttr].mod || 0;
+                    else
+                        rollData.akasha.veilweavingAttr += actor._rollData.abilities[veilweavingAttr].mod || 0;
 
-            let essenceFeature = items.find(i => i.type === "feat" && i.name.toLowerCase().includes("essence"));
-            if (essenceFeature) {
-                rollData.akasha.essence = essenceFeature.system?.uses?.value ?? 0;
+                // Essence and invested essence
+                const veils = items.filter(i => i.type === "akashic-magic.veil" || i.type === "veil");
+                let totalInvestedEssence = 0;
+                veils.forEach(v => {
+                    if (!v.system.shaped) return;
+                    const invested = v.system?.investedEssence ?? 0;
+                    totalInvestedEssence += invested;
+                });
+                rollData.akasha.investedEssence = totalInvestedEssence;
+
+                if (rollData.akasha.passionCapacity)
+                    rollData.akasha.hasPassion = true;
+                else
+                    rollData.akasha.hasPassion = false;
             }
+            rollData.investedEssence = undefined;
+            rollData.isPassionVeil = undefined;
         }
     } catch (err) {
         console.error(err);

@@ -39,21 +39,11 @@ function registerConfig() {
 
 	// Add save types to config
 	pf1.config.veilSaveTypes = {
-		Fortitude: {
-			label: "AkashicMagic.Veils.SaveTypes.fortitude",
-		},
-		Reflex: {
-			label: "AkashicMagic.Veils.SaveTypes.reflex",
-		},
-		Will: {
-			label: "AkashicMagic.Veils.SaveTypes.will",
-		},
-		None: {
-			label: "AkashicMagic.Veils.SaveTypes.none",
-		},
-		Special: {
-			label: "AkashicMagic.Veils.SaveTypes.special",
-		},
+		fort: "AkashicMagic.Veils.SaveTypes.fortitude",
+		ref: "AkashicMagic.Veils.SaveTypes.reflex",
+		will: "AkashicMagic.Veils.SaveTypes.will",
+		none: "AkashicMagic.Veils.SaveTypes.none",
+		special: "AkashicMagic.Veils.SaveTypes.special",
 	};
 
 	// Add save effects to config
@@ -91,6 +81,21 @@ function registerConfig() {
 		label: "AkashicMagic.BuffTargets.VeilweavingModifier",
 		category: "akasha"
 	};
+
+	pf1.config.buffTargets.akshessence = {
+		label: "AkashicMagic.BuffTargets.Essence",
+		category: "akasha"
+	}
+
+	pf1.config.buffTargets.akshpassionEssence = {
+		label: "AkashicMagic.BuffTargets.PassionEssence",
+		category: "akasha"
+	}
+
+	pf1.config.buffTargets.akshpassionCapacity = {
+		label: "AkashicMagic.BuffTargets.PassionCapacity",
+		category: "akasha"
+	}
 }
 
 /**

@@ -42,8 +42,8 @@ Hooks.once("i18nInit", () => {
  * It registers the Maneuver Browser and performs migration tasks for old actors.
  * Additionally, it shows a welcome dialog to users who have installed the module for the first time.
  */
-Hooks.once("ready", () => {
-	readyHook();
+Hooks.once("ready", async () => {
+	await readyHook();
 });
 
 /**

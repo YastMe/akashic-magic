@@ -44,6 +44,17 @@
       "Descriptors": {
         "Label": "Descriptores",
         "Plural": "Descriptores"
+      },
+      "SaveType": {
+        "Label": "Tipo de Salvación"
+      },
+      "Save": {
+        "Label": "Salvación",
+        "DC": "CD"
+      },
+      "IsPassionVeil": {
+        "Label": "Es Velo de Pasión",
+        "Tooltip": "Si está marcado, este velo es un Velo de Pasión y no utiliza esencia invertida."
       }
     },
     "VeilFilter": {
@@ -71,7 +82,9 @@
       "MaxCapacity": "Capacidad Máxima de Esencia",
       "OverCapacity": "Sobre Capacidad",
       "InvestedTooltip": "@akasha.investedEssence",
-      "MaxCapacityTooltip": "@akasha.maxCapacity"
+      "MaxCapacityTooltip": "@akasha.maxCapacity",
+      "Passion": "Esencia de Pasión",
+      "PassionTooltip": "@akasha.passionEssence"
     },
     "Shaped": "Formado",
     "Bound": "Vinculado",
@@ -93,9 +106,12 @@
       "akasha": "Magia Akáshica"
     },
     "BuffTargets": {
+      "Essence": "Esencia",
       "VeilweaverLevel": "Nivel de Tejedor de Velos",
       "MaxCapacity": "Capacidad Máxima de Esencia",
-      "VeilweavingModifier": "Modificador de Tejido de Velos"
+      "VeilweavingModifier": "Modificador de Tejido de Velos",
+      "PassionEssence": "Esencia de Pasión",
+      "PassionCapacity": "Capacidad de Pasión"
     },
     "Notifications": {
       "VeilAlreadyShaped": "Este velo ya está formado en una ranura de chakra.",

@@ -13,61 +13,6 @@ export function cleanDice(diceString) {
     return diceString.replaceAll('[', '').replaceAll(']', '');
 }
 
-export function getActorVeils(actor) {
-    const classes = actor.items.filter(i => i.type === "class" &&
-        ((i.system?.tags ?? []).some(t => (typeof t === "string" ? t : t.value)?.toLowerCase() === "akashic") || (
-            pf1.config.akashicClasses.hasOwnProperty(i.name))));
-    const veilweaver = actor.getFlag("akashic-magic", "veilweaver");
-    if (classes.length === 0 && !veilweaver) return [];
-    let classVeils = [];
-    for (const cls of classes) {
-        game.packs.forEach((pack) => {
-            const compendiumPackName = pack.metadata.id;
-            pack.index.forEach((item) => {
-                if (actor.items.find(i => i.name === item.name && i.type === "akashic-magic.veil")) {
-                    classVeils.push({
-                        id: item._id,
-                        name: item.name,
-                        pack: compendiumPackName,
-                        shaped: item.system?.shaped || false,
-                        shapedTo: item.system?.shapedTo || "",
-                        bound: item.system?.bound || false,
-                        boundTo: item.system?.boundTo || "",
-                        actorItem: false
-                    });
-                    return;
-                }
-                if (item.type === "akashic-magic.veil" && item.system?.classes.base?.includes(cls.name) && !classVeils.includes(item._id)) {
-                    classVeils.push({
-                        id: item._id,
-                        name: item.name,
-                        pack: compendiumPackName,
-                        shaped: item.system?.shaped || false,
-                        actorItem: false
-                    });
-                }
-            })
-        });
-    }
-    for (const item of actor.items) {
-        if (item.type === "akashic-magic.veil" && !classVeils.find(v => v.id === item.id)) {
-            classVeils.push({
-                id: item.id,
-                name: item.name,
-                pack: null,
-                shaped: item.system?.shaped || false,
-                actorItem: true
-            });
-        }
-    }
-    // Sort veils alphabetically by name
-    classVeils.sort((a, b) => a.name.localeCompare(b.name));
-
-    // Remove duplicates
-    classVeils = classVeils.filter((v, i, a) => a.findIndex(t => (t.id === v.id)) === i);
-    return classVeils;
-}
-
 export function handleJumpingToSummary() {
     libWrapper.register('akashic-magic', 'pf1.applications.actor.ActorSheetPF.prototype._focusTabByItem', function (wrapped, item) {
         wrapped(item);
@@ -105,9 +50,9 @@ export function handleJumpingToSummary() {
     }, 'WRAPPER');
 
     libWrapper.register('akashic-magic', 'pf1.applications.actor.ActorSheetPF.prototype._onChangeInput', async function (wrapped, item) {
-        if (item.target.name !== "system.investedEssence")
+        if (item.target.name !== "system.investedEssence" && item.target.name !== "system.akasha.passionEssence" && item.target.name !== "system.isPassionVeil")
             wrapped(item);
-        else {
+        else if (item.target.name === "system.investedEssence") {
             const input = item.target;
             const name = input.name;
             let veil = this.actor.items.get(input.id);
@@ -131,6 +76,20 @@ export function handleJumpingToSummary() {
 
             // Remove focus to avoid accidental changes
             input.blur();
+        } else if (item.target.name === "system.akasha.passionEssence") {
+            this._forceShowVeilTab = true;
+            this.activateTab("akashic-magic", "primary");
+            wrapped(item);
+        } else if (item.target.name === "system.isPassionVeil") {
+            const input = item.target;
+            const name = input.name;
+            let veil = this.actor.items.get(input.id);
+            if (!veil) return;
+            let value = input.checked;
+
+            await veil.update({ [name]: value });
+            veil.parent.sheet._forceShowVeilTab = true;
+            veil.parent.sheet.activateTab("akashic-magic", "primary");
         }
     }, 'MIXED');
 }

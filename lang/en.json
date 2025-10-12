@@ -44,6 +44,17 @@
       "Descriptors": {
         "Label": "Descriptors",
         "Plural": "Descriptors"
+      },
+      "SaveType": {
+        "Label": "Save Type"
+      },
+      "Save": {
+        "Label": "Save",
+        "DC": "DC"
+      },
+      "IsPassionVeil": {
+        "Label": "Is Passion Veil",
+        "Tooltip": "If checked, this veil is a Passion Veil and does not use invested essence."
       }
     },
     "VeilFilter": {
@@ -71,7 +82,9 @@
       "MaxCapacity": "Max Essence Capacity",
       "OverCapacity": "Over Capacity",
       "InvestedTooltip": "@akasha.investedEssence",
-      "MaxCapacityTooltip": "@akasha.maxCapacity"
+      "MaxCapacityTooltip": "@akasha.maxCapacity",
+      "Passion": "Passion Essence",
+      "PassionTooltip": "@akasha.passionEssence"
     },
     "Shaped": "Shaped",
     "Bound": "Bound",
@@ -93,9 +106,12 @@
       "akasha": "Akashic Magic"
     },
     "BuffTargets": {
+      "Essence": "Essence",
       "VeilweaverLevel": "Veilweaver Level",
       "MaxCapacity": "Max Essence Capacity",
-      "VeilweavingModifier": "Veilweaving Modifier"
+      "VeilweavingModifier": "Veilweaving Modifier",
+      "PassionEssence": "Passion Essence",
+      "PassionCapacity": "Passion Capacity"
     },
     "Notifications": {
       "VeilAlreadyShaped": "This veil is already shaped on a chakra slot.",

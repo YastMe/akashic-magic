@@ -5,10 +5,10 @@ export function i18nHook() {
 	for (let [key, value] of Object.entries(pf1.config.chakraSlots)) {
 		pf1.config.chakraSlots[key] = game.i18n.localize(`AkashicMagic.ChakraSlots.${key}`, value);
 	}
-    for (let r of Object.values(pf1.config.veilSaveTypes)) {
-		r.label = game.i18n.localize(r.label);
+    for (let [key, value] of Object.entries(pf1.config.veilSaveTypes)) {
+		pf1.config.veilSaveTypes[key] = game.i18n.localize(value);
 	}
-    for (let r of Object.values(pf1.config.veilSaveEffects)) {
+	for (let r of Object.values(pf1.config.veilSaveEffects)) {
 		r.label = game.i18n.localize(r.label);
     }
 	for (let r of Object.values(pf1.config.buffTargetCategories)) {
