@@ -1,7 +1,7 @@
 {
   "id": "akashic-magic",
   "title": "Akashic Magic for PF1e",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "relationships": {
     "systems": [
       {
@@ -73,7 +73,6 @@
         "classes",
         "veils",
         "feats",
-        "traits",
         "macros"
       ],
       "color": "#7B68EE",
@@ -97,17 +96,6 @@
       "label": "Macros",
       "path": "packs/macros",
       "type": "Macro",
-      "system": "pf1",
-      "ownership": {
-        "PLAYER": "OBSERVER",
-        "ASSISTANT": "OWNER"
-      }
-    },
-    {
-      "name": "races",
-      "label": "Races",
-      "path": "packs/races",
-      "type": "Item",
       "system": "pf1",
       "ownership": {
         "PLAYER": "OBSERVER",
