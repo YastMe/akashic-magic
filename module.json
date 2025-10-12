@@ -72,8 +72,7 @@
       "packs": [
         "classes",
         "veils",
-        "feats",
-        "macros"
+        "feats"
       ],
       "color": "#7B68EE",
       "folders": []
@@ -85,17 +84,6 @@
       "label": "Veils",
       "path": "packs/veils",
       "type": "Item",
-      "system": "pf1",
-      "ownership": {
-        "PLAYER": "OBSERVER",
-        "ASSISTANT": "OWNER"
-      }
-    },
-    {
-      "name": "macros",
-      "label": "Macros",
-      "path": "packs/macros",
-      "type": "Macro",
       "system": "pf1",
       "ownership": {
         "PLAYER": "OBSERVER",
