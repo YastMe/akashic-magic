@@ -84,7 +84,9 @@
       "InvestedTooltip": "@akasha.investedEssence",
       "MaxCapacityTooltip": "@akasha.maxCapacity",
       "Passion": "Esencia de Pasión",
-      "PassionTooltip": "@akasha.passionEssence"
+      "PassionCapacity": "Capacidad de Pasión",
+      "PassionTooltip": "@akasha.passionEssence",
+      "PassionCapacityTooltip": "@akasha.passionCapacity"
     },
     "Shaped": "Formado",
     "Bound": "Vinculado",
