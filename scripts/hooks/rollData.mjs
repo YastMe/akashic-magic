@@ -60,7 +60,7 @@ export function onGetRollData(doc, rollData) {
                     maxCapacity = 11;
                 }
 
-                if (rollData.akasha.maxCapacity !== undefined)
+                if (rollData.akasha.maxCapacity === undefined)
                     rollData.akasha.maxCapacity = maxCapacity;
                 else
                     rollData.akasha.maxCapacity += maxCapacity;
