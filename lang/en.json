@@ -131,7 +131,8 @@
       "Cancel": "Cancel"
     },
     "Config": {
-      "Name": "Akashic Magic Settings"
+      "Name": "Akashic Magic Settings",
+      "HideVeilTab": "Hide Veil Tab (Non-Veilweaver)"
     }
   }
 }

@@ -131,7 +131,8 @@
       "Cancel": "Cancelar"
     },
     "Config": {
-      "Name": "Configuración de Magia Akáshica"
+      "Name": "Configuración de Magia Akáshica",
+      "HideVeilTab": "Ocultar Pestaña de Velos (No Tejedor de Velos)"
     }
   }
 }

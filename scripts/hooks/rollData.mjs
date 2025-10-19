@@ -5,16 +5,36 @@ export function onGetRollData(doc, rollData) {
         if (doc instanceof pf1.documents.actor.ActorPF) {
             const actor = doc;
             if (!actor || !actor._rollData) return;
+            if (actor.getFlag(MODULE_ID, "nonVeilweaver")) return;
             const items = actor.items;
             rollData.akasha = rollData.akasha || {};
 
             const hasVeils = items.some(i => i.type === "akashic-magic.veil" || i.type === "veil");
 
+            const akashicClasses = new Set(
+                Object.values(pf1.config.akashicClasses).map(c => c.toLowerCase())
+            );
+
             const isVeilweaver = items.some(i => {
-                if (i.type !== "feat" && i.type !== "class") return false;
-                const name = i.name.toLowerCase();
-                return name.includes("veilweaving") || name.includes("veil") || Object.values(pf1.config.akashicClasses).some(c => c.toLowerCase() === name);
+                if (!i || (i.type !== "feat" && i.type !== "class")) return false;
+
+                const name = i.name?.toLowerCase() ?? "";
+                const subtype = i.system?.subType;
+
+                const hasVeilweaving = /\bveilweav\w*\b/i.test(name);
+                const hasVeilFeat = subtype === "feat" && /\bveil\b/i.test(name);
+                const isAkashicClass = akashicClasses.has(name);
+
+                if (hasVeilweaving)
+                    console.info("Found veilweaving on item:", i.name, "actor:", actor.name);
+                if (hasVeilFeat)
+                    console.info("Found veil feat on item:", i.name, "actor:", actor.name);
+                if (isAkashicClass)
+                    console.info("Found akashic class on item:", i.name, "actor:", actor.name);
+
+                return hasVeilweaving || hasVeilFeat || isAkashicClass;
             });
+
 
             if (hasVeils || isVeilweaver)
                 actor.setFlag(MODULE_ID, "veilweaver", true);
