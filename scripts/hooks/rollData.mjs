@@ -110,6 +110,9 @@ export function onGetRollData(doc, rollData) {
                     rollData.akasha.hasPassion = true;
                 else
                     rollData.akasha.hasPassion = false;
+
+                if (rollData.essence === undefined)
+                    rollData.essence = 0;
             }
             rollData.investedEssence = undefined;
             rollData.isPassionVeil = undefined;

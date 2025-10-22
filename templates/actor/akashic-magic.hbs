@@ -4,24 +4,24 @@
             {{#if actor._rollData.akasha.veilweavingLevel}}
             <div data-tooltip="{{localize 'AkashicMagic.VeilweaverLevel.Tooltip'}}" class="info-box veilweaver-level">
                 <h5><a disabled>{{localize "AkashicMagic.VeilweaverLevel.Single"}}</a></h5>
-                <span class="value">{{actor._rollData.akasha.veilweavingLevel}}</span>
+                <span class="value">{{numberFormat actor._rollData.akasha.veilweavingLevel}}</span>
             </div>
             {{/if}}
             <div class="info-box veilweaving-attr">
                 <h5><a disabled>{{localize 'AkashicMagic.Attributes.mod'}}</a></h5>
                 <span class="value"
-                    data-tooltip="{{localize 'AkashicMagic.Attributes.veilweavingAttrTooltip'}}">+{{actor._rollData.akasha.veilweavingAttr}}</span>
+                    data-tooltip="{{localize 'AkashicMagic.Attributes.veilweavingAttrTooltip'}}">{{numberFormat actor._rollData.akasha.veilweavingAttr}}</span>
             </div>
             <div class="info-box invested-essence">
                 <h5><a disabled>{{localize 'AkashicMagic.Essence.Invested'}}</a></h5>
                 <span class="value"
-                    data-tooltip="{{localize 'AkashicMagic.Essence.InvestedTooltip'}}">{{actor._rollData.akasha.investedEssence}}
-                    / {{actor._rollData.akasha.essence}}</span>
+                    data-tooltip="{{localize 'AkashicMagic.Essence.InvestedTooltip'}}">{{numberFormat actor._rollData.akasha.investedEssence}}
+                    / {{numberFormat actor._rollData.akasha.essence}}</span>
             </div>
             <div class="info-box max-capacity">
                 <h5><a disabled>{{localize 'AkashicMagic.Essence.MaxCapacity'}}</a></h5>
                 <span class="value"
-                    data-tooltip="{{localize 'AkashicMagic.Essence.MaxCapacityTooltip'}}">{{actor._rollData.akasha.maxCapacity}}</span>
+                    data-tooltip="{{localize 'AkashicMagic.Essence.MaxCapacityTooltip'}}">{{numberFormat actor._rollData.akasha.maxCapacity}}</span>
             </div>
         </div>
         {{#if actor._rollData.akasha.hasPassion}}
@@ -39,7 +39,7 @@
             <div class="info-box passion-capacity">
                 <h5><a disabled>{{localize 'AkashicMagic.Essence.PassionCapacity'}}</a></h5>
                 <span class="value"
-                    data-tooltip="{{localize 'AkashicMagic.Essence.PassionCapacityTooltip'}}">{{actor._rollData.akasha.passionCapacity}}</span>
+                    data-tooltip="{{localize 'AkashicMagic.Essence.PassionCapacityTooltip'}}">{{numberFormat actor._rollData.akasha.passionCapacity}}</span>
             </div>
         </div>
         {{/if}}
