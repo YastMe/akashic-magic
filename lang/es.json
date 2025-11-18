@@ -55,6 +55,29 @@
       "IsPassionVeil": {
         "Label": "Es Velo de Pasión",
         "Tooltip": "Si está marcado, este velo es un Velo de Pasión y no utiliza esencia invertida."
+      },
+      "Use": {
+        "Tooltip": "Usar Velo"
+      }
+    },
+    "Slots": {
+      "Low": {
+        "Slot1": "Pies",
+        "Slot2": "Manos",
+        "Slot3": "Cabeza"
+      },
+      "Middle": {
+        "Slot1": "Diadema",
+        "Slot2": "Hombros",
+        "Slot3": "Muñecas"
+      },
+      "Higher": {
+        "Slot1": "Cinturón",
+        "Slot2": "Cuello"
+      },
+      "Pinnacle": {
+        "Slot2": "Cuerpo",
+        "Slot3": "Pecho"
       }
     },
     "VeilFilter": {
@@ -130,6 +153,9 @@
       "Confirm": "Confirmar",
       "Cancel": "Cancelar"
     },
+    "duplicate": "Copia de",
+    "confirm": "Confirmar",
+    "delete-action-confirmation": "¿Está seguro de que desea eliminar esta acción?",
     "Config": {
       "Name": "Configuración de Magia Akáshica",
       "HideVeilTab": "Ocultar Pestaña de Velos (No Tejedor de Velos)"

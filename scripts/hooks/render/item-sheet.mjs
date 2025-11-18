@@ -46,5 +46,44 @@ export function renderItemHook(app, html) {
 	if (item.type === "akashic-magic.veil") {
 		handleSaveTypeVisibility(item, html);
 		handleSpecialSaveHeaders(item);
+		addControlHandlers(app, html);
+	}
+}
+
+function addControlHandlers(app, html) {
+	let item = app.object;
+
+	if (item.type === "akashic-magic.veil") {
+		const duplicateButtons = html[0].querySelectorAll(".duplicate-action");
+		const deleteButtons = html[0].querySelectorAll(".delete-action");
+
+		duplicateButtons.forEach(button => {
+			// Remove the element completely without re-adding it as a whole
+			button.parentNode.removeChild(button);
+		});
+		deleteButtons.forEach(button => {
+			const newButton = button.cloneNode(true);
+			button.parentNode.replaceChild(newButton, button);
+
+			newButton.addEventListener("click", async (event) => {
+				event.preventDefault();
+				event.stopPropagation();
+				event.stopImmediatePropagation();
+				const actionId = newButton.parentNode?.parentNode?.dataset?.actionId;
+				if (!actionId) return;
+				const action = item.actions.get(actionId);
+				if (!action) return;
+				const confirmed = await Dialog.confirm({
+					title: game.i18n.localize("AkashicMagic.confirm"),
+					content: `<p>${game.i18n.localize("AkashicMagic.delete-action-confirmation")}</p>`,
+					defaultYes: false
+				});
+				if (!confirmed) return;
+				item.actions.delete(actionId);
+				const systemActions = item.system.actions.filter(a => a._id !== actionId);
+				await item.update({ "system.actions": systemActions });
+				await app.render();
+			});
+		});
 	}
 }

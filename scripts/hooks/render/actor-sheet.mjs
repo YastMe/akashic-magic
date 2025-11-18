@@ -220,6 +220,10 @@ function addControlHandlers(app, html) {
                 display: function () {
                     VeilItem.sendChatMessage(resolvedVeil);
                     forceTab();
+                },
+                use: function () {
+                    resolvedVeil?.use(actor);
+                    forceTab();
                 }
             };
             actionMap[action]?.();

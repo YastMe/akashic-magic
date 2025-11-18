@@ -55,6 +55,29 @@
       "IsPassionVeil": {
         "Label": "Is Passion Veil",
         "Tooltip": "If checked, this veil is a Passion Veil and does not use invested essence."
+      },
+      "Use": {
+        "Tooltip": "Use Veil"
+      }
+    },
+    "Slots": {
+      "Low": {
+        "Slot1": "Feet",
+        "Slot2": "Hands",
+        "Slot3": "Head"
+      },
+      "Middle": {
+        "Slot1": "Headband",
+        "Slot2": "Shoulders",
+        "Slot3": "Wrists"
+      },
+      "Higher": {
+        "Slot1": "Belt",
+        "Slot2": "Neck"
+      },
+      "Pinnacle": {
+        "Slot2": "Body",
+        "Slot3": "Chest"
       }
     },
     "VeilFilter": {
@@ -130,6 +153,9 @@
       "Confirm": "Confirm",
       "Cancel": "Cancel"
     },
+    "duplicate": "Copy of",
+    "confirm": "Confirm",
+    "delete-action-confirmation": "Are you sure you want to delete this action?",
     "Config": {
       "Name": "Akashic Magic Settings",
       "HideVeilTab": "Hide Veil Tab (Non-Veilweaver)"

@@ -10,18 +10,19 @@
             <div class="info-box veilweaving-attr">
                 <h5><a disabled>{{localize 'AkashicMagic.Attributes.mod'}}</a></h5>
                 <span class="value"
-                    data-tooltip="{{localize 'AkashicMagic.Attributes.veilweavingAttrTooltip'}}">{{numberFormat actor._rollData.akasha.veilweavingAttr}}</span>
+                    data-tooltip="{{localize 'AkashicMagic.Attributes.veilweavingAttrTooltip'}}">{{numberFormat
+                    actor._rollData.akasha.veilweavingAttr}}</span>
             </div>
             <div class="info-box invested-essence">
                 <h5><a disabled>{{localize 'AkashicMagic.Essence.Invested'}}</a></h5>
-                <span class="value"
-                    data-tooltip="{{localize 'AkashicMagic.Essence.InvestedTooltip'}}">{{numberFormat actor._rollData.akasha.investedEssence}}
+                <span class="value" data-tooltip="{{localize 'AkashicMagic.Essence.InvestedTooltip'}}">{{numberFormat
+                    actor._rollData.akasha.investedEssence}}
                     / {{numberFormat actor._rollData.akasha.essence}}</span>
             </div>
             <div class="info-box max-capacity">
                 <h5><a disabled>{{localize 'AkashicMagic.Essence.MaxCapacity'}}</a></h5>
-                <span class="value"
-                    data-tooltip="{{localize 'AkashicMagic.Essence.MaxCapacityTooltip'}}">{{numberFormat actor._rollData.akasha.maxCapacity}}</span>
+                <span class="value" data-tooltip="{{localize 'AkashicMagic.Essence.MaxCapacityTooltip'}}">{{numberFormat
+                    actor._rollData.akasha.maxCapacity}}</span>
             </div>
         </div>
         {{#if actor._rollData.akasha.hasPassion}}
@@ -39,7 +40,8 @@
             <div class="info-box passion-capacity">
                 <h5><a disabled>{{localize 'AkashicMagic.Essence.PassionCapacity'}}</a></h5>
                 <span class="value"
-                    data-tooltip="{{localize 'AkashicMagic.Essence.PassionCapacityTooltip'}}">{{numberFormat actor._rollData.akasha.passionCapacity}}</span>
+                    data-tooltip="{{localize 'AkashicMagic.Essence.PassionCapacityTooltip'}}">{{numberFormat
+                    actor._rollData.akasha.passionCapacity}}</span>
             </div>
         </div>
         {{/if}}
@@ -52,6 +54,8 @@
                 <div class="item-name">
                     <h3>{{localize "AkashicMagic.ShapedVeils"}}</h3>
                 </div>
+                <div class="item-detail item-actions" style=""><i class="icon-pf icon-gears"
+                        data-tooltip="PF1.ActionPlural"></i></div>
                 {{#if actor._rollData.akasha.hasPassion}}
                 <div class="item-detail essence">
                     <i class="fa-solid fa-heart"
@@ -75,7 +79,7 @@
             {{#if (eq veil.type "akashic-magic.veil")}}
             {{#if veil.system.shaped}}
             <li class="item flexrow" id="{{veil.id}}" draggable="true">
-                <div class="item-name">
+                <div class="item-name veil-control" name="viewDetails" id="{{veil.id}}">
                     <a class="item-image veil-control" style="background-image: url({{veil.img}});"
                         data-tooltip="PF1.DisplayInChat" name="display" id="{{veil.id}}"></a>
                     <a class="veil-control" name="veilName" id="{{veil.id}}" dataset-pack="{{veil.pack}}">
@@ -84,23 +88,34 @@
                         </h4>
                     </a>
                 </div>
+                {{#if veil.system.actions}}
+                <div class="item-detail item-actions" style="">
+                    <div class="item-action">
+                        <a class="item-control item-action action roll veil-control"
+                            data-tooltip="AkashicMagic.Veils.Use.Tooltip" name="use" id="{{veil.id}}">
+                            <i class="fa-solid fa-dice-d20" inert=""></i>
+                        </a>
+                    </div>
+                </div>
+                {{/if}}
                 {{#if actor._rollData.akasha.hasPassion}}
                 <div class="item-detail essence veil-control" name="isPassionVeil" id="{{veil.id}}">
-                    <input type="checkbox" name="system.isPassionVeil" id="{{veil.id}}"
-                        {{#if veil.system.isPassionVeil}} checked {{/if}}
+                    <input type="checkbox" name="system.isPassionVeil" id="{{veil.id}}" {{#if
+                        veil.system.isPassionVeil}} checked {{/if}}
                         data-tooltip='{{localize "AkashicMagic.Veils.IsPassionVeil.Tooltip"}}' />
                 </div>
                 {{/if}}
                 <div class="item-detail essence veil-control" name="setEssence" id="{{veil.id}}">
-                {{#unless veil.system.isPassionVeil}}
+                    {{#unless veil.system.isPassionVeil}}
                     <input type="text" name="system.investedEssence" value="{{veil.system.investedEssence}}" size="12"
                         id="{{veil.id}}" onfocus="this.select()" {{#if (gt veil.system.investedEssence
                         @root.actor._rollData.akasha.maxCapacity)}} style="color: red;"
                         data-tooltip="{{localize 'AkashicMagic.Essence.OverCapacity'}}" {{else}}
                         data-tooltip="{{localize 'AkashicMagic.Essence.Invested'}}" {{/if}} />
-                {{else}}
-                    <label data-tooltip="{{localize 'AkashicMagic.Essence.Invested'}}">{{actor.system.akasha.passionEssence}}</label>
-                {{/unless}}
+                    {{else}}
+                    <label
+                        data-tooltip="{{localize 'AkashicMagic.Essence.Invested'}}">{{actor.system.akasha.passionEssence}}</label>
+                    {{/unless}}
                 </div>
                 <div class="item-detail veil-slot tooltip" style="flex-basis:15%">
                     {{#unless veil.system.bound}}
