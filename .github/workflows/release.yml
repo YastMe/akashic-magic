@@ -1,0 +1,65 @@
+name: Release to Foundry VTT
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Extract version from tag
+        id: get_version
+        run: |
+          VERSION=${GITHUB_REF#refs/tags/v}
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+
+      - name: Get release
+        id: get_release
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const release = await github.rest.repos.getReleaseByTag({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              tag: context.ref.replace('refs/tags/', '')
+            });
+            return release.data.html_url;
+          result-encoding: string
+
+      - name: Publish to Foundry VTT
+        run: |
+          RESPONSE=$(curl -X POST "https://foundryvtt.com/_api/packages/release_version/" \
+            -H "Content-Type: application/json" \
+            -H "Authorization: ${{ secrets.FOUNDRY_RELEASE_TOKEN }}" \
+            -d '{
+              "id": "akashic-magic",
+              "release": {
+                "version": "${{ steps.get_version.outputs.version }}",
+                "manifest": "https://github.com/${{ github.repository }}/releases/download/${{ github.ref_name }}/module.json",
+                "notes": "${{ steps.get_release.outputs.result }}",
+                "compatibility": {
+                  "minimum": "13",
+                  "verified": "13",
+                  "maximum": "13"
+                }
+              }
+            }' \
+            -w "\n%{http_code}" -o response_body.json)
+          
+          HTTP_CODE=$(echo "$RESPONSE" | tail -n1)
+          BODY=$(cat response_body.json)
+          
+          echo "HTTP Status Code: $HTTP_CODE"
+          echo "Response Body: $BODY"
+          
+          if [ "$HTTP_CODE" -eq 200 ]; then
+            echo "✅ Successfully published to Foundry VTT!"
+          else
+            echo "❌ Failed to publish to Foundry VTT"
+            echo "$BODY"
+            exit 1
+          fi
