@@ -136,7 +136,8 @@
       "MaxCapacity": "Max Essence Capacity",
       "VeilweavingModifier": "Veilweaving Modifier",
       "PassionEssence": "Passion Essence",
-      "PassionCapacity": "Passion Capacity"
+      "PassionCapacity": "Passion Capacity",
+      "InvestedEssence": "Invested Essence"
     },
     "Notifications": {
       "VeilAlreadyShaped": "This veil is already shaped on a chakra slot.",
@@ -158,7 +159,8 @@
     "delete-action-confirmation": "Are you sure you want to delete this action?",
     "Config": {
       "Name": "Akashic Magic Settings",
-      "HideVeilTab": "Hide Veil Tab (Non-Veilweaver)"
+      "HideVeilTab": "Hide Veil Tab (Non-Veilweaver)",
+      "ForceVeilTabOpen": "Force Veil Tab Open (Always Show)"
     }
   }
 }

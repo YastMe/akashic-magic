@@ -1,65 +1,86 @@
-name: Release to Foundry VTT
+name: Release to FoundryVTT
 
 on:
   release:
     types: [published]
 
 jobs:
-  publish:
+  release:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
-      - name: Checkout code
+      - name: Checkout repository
         uses: actions/checkout@v4
 
       - name: Extract version from tag
         id: get_version
         run: |
-          VERSION=${GITHUB_REF#refs/tags/v}
+          # Remove 'v' prefix if present
+          VERSION=${GITHUB_REF#refs/tags/}
+          VERSION=${VERSION#v}
           echo "version=$VERSION" >> $GITHUB_OUTPUT
 
-      - name: Get release
-        id: get_release
-        uses: actions/github-script@v7
-        with:
-          script: |
-            const release = await github.rest.repos.getReleaseByTag({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              tag: context.ref.replace('refs/tags/', '')
-            });
-            return release.data.html_url;
-          result-encoding: string
-
-      - name: Publish to Foundry VTT
+      - name: Update module.json
         run: |
-          RESPONSE=$(curl -X POST "https://foundryvtt.com/_api/packages/release_version/" \
+          VERSION=${{ steps.get_version.outputs.version }}
+          REPO=${{ github.repository }}
+          TAG=${{ github.event.release.tag_name }}
+          jq --arg version "$VERSION" \
+             --arg manifest "https://github.com/$REPO/releases/download/$TAG/module.json" \
+             --arg download "https://github.com/$REPO/releases/download/$TAG/$VERSION.zip" \
+             '.version = $version | .manifest = $manifest | .download = $download' \
+             module.json > module.json.tmp && mv module.json.tmp module.json
+
+      - name: Create module zip
+        run: |
+          VERSION=${{ steps.get_version.outputs.version }}
+          zip -r "$VERSION.zip" . \
+            --exclude ".git/*" \
+            --exclude ".github/*" \
+            --exclude "*.zip" \
+            --exclude "packs/*/_source/*"
+
+      - name: Upload release assets
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          VERSION=${{ steps.get_version.outputs.version }}
+          gh release upload ${{ github.event.release.tag_name }} \
+            module.json \
+            "$VERSION.zip"
+
+      - name: Publish to FoundryVTT
+        run: |
+          response=$(curl -X POST "https://foundryvtt.com/_api/packages/release_version/" \
             -H "Content-Type: application/json" \
             -H "Authorization: ${{ secrets.FOUNDRY_RELEASE_TOKEN }}" \
             -d '{
               "id": "akashic-magic",
               "release": {
                 "version": "${{ steps.get_version.outputs.version }}",
-                "manifest": "https://github.com/${{ github.repository }}/releases/download/${{ github.ref_name }}/module.json",
-                "notes": "${{ steps.get_release.outputs.result }}",
+                "manifest": "https://github.com/${{ github.repository }}/releases/download/${{ github.event.release.tag_name }}/module.json",
+                "notes": "${{ github.event.release.html_url }}",
                 "compatibility": {
                   "minimum": "13",
                   "verified": "13",
-                  "maximum": "13"
+                  "maximum": ""
                 }
               }
             }' \
-            -w "\n%{http_code}" -o response_body.json)
+            -w "\n%{http_code}" \
+            -s)
           
-          HTTP_CODE=$(echo "$RESPONSE" | tail -n1)
-          BODY=$(cat response_body.json)
+          http_code=$(echo "$response" | tail -n1)
+          body=$(echo "$response" | sed '$d')
           
-          echo "HTTP Status Code: $HTTP_CODE"
-          echo "Response Body: $BODY"
+          echo "Response body: $body"
+          echo "HTTP status code: $http_code"
           
-          if [ "$HTTP_CODE" -eq 200 ]; then
-            echo "✅ Successfully published to Foundry VTT!"
-          else
-            echo "❌ Failed to publish to Foundry VTT"
-            echo "$BODY"
+          if [ "$http_code" -ne 200 ]; then
+            echo "Failed to publish to FoundryVTT"
+            echo "$body"
             exit 1
           fi
+          
+          echo "Successfully published to FoundryVTT!"

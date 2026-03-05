@@ -10,7 +10,13 @@ export function renderActorHook(data, app, html) {
     if (app._forceShowVeilList === undefined) app._forceShowVeilList = false;
     injectAkashicMagicDiv(app, html);
     injectHideVeilTabCheckbox(app, html, data.actor);
-    if (!data.actor.getFlag(MODULE_ID, "veilweaver") || data.actor.getFlag(MODULE_ID, "nonVeilweaver")) return;
+    injectForceVeilTabOpenCheckbox(app, html, data.actor);
+    // Check if we should show the veil tab (either veilweaver or forced open, but not if hidden)
+    const forceTabOpen = data.actor.getFlag(MODULE_ID, "forceVeilTabOpen");
+    const isVeilweaver = data.actor.getFlag(MODULE_ID, "veilweaver");
+    const hideTab = data.actor.getFlag(MODULE_ID, "nonVeilweaver");
+    const shouldShowTab = (isVeilweaver || forceTabOpen) && !hideTab;
+    if (!shouldShowTab) return;
     injectVeilweavingAttrSelector(app, html, data.actor);
     injectAkashicTab(app, html);
     addControlHandlers(app, html);
@@ -104,10 +110,29 @@ function injectHideVeilTabCheckbox(app, html, currentActor) {
 	controls.append(label);
 }
 
+function injectForceVeilTabOpenCheckbox(app, html, currentActor) {
+	let controls = html.find(".akashic-magic-div .stacked")[0];
+	const checkbox = document.createElement("input");
+	checkbox.type = "checkbox";
+	checkbox.name = `flags.${MODULE_ID}.forceVeilTabOpen`;
+	checkbox.id = checkbox.name;
+	const label = document.createElement("label");
+	label.append(checkbox);
+	label.append(game.i18n.localize("AkashicMagic.Config.ForceVeilTabOpen"));
+	label.classList.add("checkbox");
+	if (!currentActor.flags[MODULE_ID] || !currentActor.flags[MODULE_ID].forceVeilTabOpen)
+		currentActor.setFlag(MODULE_ID, "forceVeilTabOpen", false);
+	if (currentActor.flags[MODULE_ID].forceVeilTabOpen) {
+		checkbox.checked = true;
+	}
+	controls.append(label);
+}
+
 function injectAkashicTab(app, html) {
     const { actor } = app;
 
-    if (actor.getFlag("akashic-magic", "veilweaver")) {
+    // Show tab if actor is a veilweaver OR if force open is enabled
+    if (actor.getFlag("akashic-magic", "veilweaver") || actor.getFlag("akashic-magic", "forceVeilTabOpen")) {
         const tabSelector = html.find("a[data-tab=skills]");
         const artsTab = document.createElement("a");
         artsTab.classList.add("item");

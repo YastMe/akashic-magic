@@ -33,7 +33,7 @@ export function onGetRollData(doc, rollData) {
                     console.info("Found akashic class on item:", i.name, "actor:", actor.name);
 
                 return hasVeilweaving || hasVeilFeat || isAkashicClass;
-            });
+            }) || actor.getFlag(MODULE_ID, "forceVeilTabOpen");
 
 
             if (hasVeils || isVeilweaver)
@@ -104,7 +104,10 @@ export function onGetRollData(doc, rollData) {
                     const invested = v.system?.investedEssence ?? 0;
                     totalInvestedEssence += invested;
                 });
-                rollData.akasha.investedEssence = totalInvestedEssence;
+                if (rollData.akasha.investedEssence === undefined)
+                    rollData.akasha.investedEssence = totalInvestedEssence;
+                else
+                    rollData.akasha.investedEssence += totalInvestedEssence;
 
                 if (rollData.akasha.passionCapacity)
                     rollData.akasha.hasPassion = true;

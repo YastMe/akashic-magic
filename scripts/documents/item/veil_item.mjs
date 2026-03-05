@@ -1,4 +1,42 @@
 export class VeilItem extends pf1.documents.item.ItemPF {
+    _rechargeActions({ period, exact, rollData } = {}) {
+        if (!(this.system.actions?.length > 0)) return;
+
+        const actions = this.toObject().system.actions;
+        let changedActions = false;
+        for (const actionData of actions) {
+            let action;
+            if (typeof actionData !== "string")
+                action = this.actions.get(actionData._id);
+            else
+                action = this.actions.get(JSON.parse(actionData)._id);
+            const max = action.uses?.self?.max ?? 0;
+            if (!(max > 0)) continue;
+
+            const uses = actionData.uses?.self;
+            const per = uses?.per;
+            if (!per) continue;
+
+            if (["charges"].includes(uses.per)) {
+                continue;
+            } else if (pf1.config.limitedUsePeriodOrder.includes(period) && !exact) {
+                // Recharge lesser time periods when using inexact matching
+                const idx = pf1.config.limitedUsePeriodOrder.indexOf(period);
+                const validPeriods = pf1.config.limitedUsePeriodOrder.slice(0, idx + 1);
+                if (!validPeriods.includes(per)) continue;
+            }
+
+            if (uses.value < max) {
+                uses.value = max;
+                changedActions = true;
+            }
+        }
+
+        if (!changedActions) return;
+
+        return { system: { actions } };
+    }
+
     async shapeToSlot(slot) {
         await this.update({ "system.shaped": true, "system.shapedTo": slot });
     }

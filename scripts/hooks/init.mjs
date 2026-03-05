@@ -67,8 +67,13 @@ function registerConfig() {
 		filters: {}
 	}
 
-	pf1.config.buffTargets.akshveilweavingLevel = {
-		label: "AkashicMagic.BuffTargets.VeilweaverLevel",
+	pf1.config.buffTargets.akshessence = {
+		label: "AkashicMagic.BuffTargets.Essence",
+		category: "akasha"
+	};
+
+	pf1.config.buffTargets.akshinvestedEssence = {
+		label: "AkashicMagic.BuffTargets.InvestedEssence",
 		category: "akasha"
 	};
 
@@ -77,25 +82,25 @@ function registerConfig() {
 		category: "akasha"
 	};
 
+	pf1.config.buffTargets.akshpassionCapacity = {
+		label: "AkashicMagic.BuffTargets.PassionCapacity",
+		category: "akasha"
+	};
+
+	pf1.config.buffTargets.akshpassionEssence = {
+		label: "AkashicMagic.BuffTargets.PassionEssence",
+		category: "akasha"
+	};
+
 	pf1.config.buffTargets.akshveilweavingAttr = {
 		label: "AkashicMagic.BuffTargets.VeilweavingModifier",
 		category: "akasha"
 	};
 
-	pf1.config.buffTargets.akshessence = {
-		label: "AkashicMagic.BuffTargets.Essence",
+	pf1.config.buffTargets.akshveilweavingLevel = {
+		label: "AkashicMagic.BuffTargets.VeilweaverLevel",
 		category: "akasha"
-	}
-
-	pf1.config.buffTargets.akshpassionEssence = {
-		label: "AkashicMagic.BuffTargets.PassionEssence",
-		category: "akasha"
-	}
-
-	pf1.config.buffTargets.akshpassionCapacity = {
-		label: "AkashicMagic.BuffTargets.PassionCapacity",
-		category: "akasha"
-	}
+	};
 }
 
 /**
