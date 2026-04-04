@@ -7,6 +7,7 @@ export async function readyHook() {
 	registerVeilBrowser();
 	await registerAkashicClasses();
 	await registerVeilDescriptors();
+	await addVeilsToItemPilesFilter();
 }
 
 /**
@@ -47,3 +48,10 @@ async function registerVeilDescriptors() {
 		});
 	}
 }
+
+// This function adds the "akashic-magic.veil" item type to the filters of the Item Piles module, 
+// allowing veils to be excluded from item piles merchants if the module is active.
+async function addVeilsToItemPilesFilter() {
+	if (game.modules.get("item-piles-pf1e")?.active)
+		game.itempiles.API.ITEM_FILTERS[0].filters += ", akashic-magic.veil";
+};
