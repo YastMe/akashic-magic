@@ -19,6 +19,7 @@ Features
 - **Veilweaver Detection**: Automatic detection of veilweaver classes and appropriate UI display
 - **Real-time Calculations**: Dynamic calculation of veilweaving levels, essence capacity, and invested essence
 - **Visual Indicators**: Color-coded essence management with over-capacity warnings
+- **Module Compatibility**: Compatible with [Pathfinder 1e Alt Sheet](https://foundryvtt.com/packages/pf1-alt-sheet)
 
 ### Character Mechanics
 - **Veilweaving Levels**: Automatic calculation of total veilweaving levels across multiple classes
