@@ -1,136 +1,12 @@
-import { createTemplate } from "../../documents/actor/actor-sheet.mjs";
-import { VeilItem } from "../../documents/item/veil_item.mjs";
-import { cleanDice, getVeilDocument } from "../../utils.mjs";
-import { MODULE_ID } from "../../_moduleId.mjs";
-import { renderAltActorHook } from "./alt-sheet/compat.mjs";
+import { MODULE_ID } from "../../../_moduleId.mjs";
+import { createTemplate } from "../../../documents/actor/actor-sheet.mjs";
+import { VeilItem } from "../../../documents/item/veil_item.mjs";
+import { cleanDice, getVeilDocument } from "../../../utils.mjs";
 
-export function renderActorHook(data, app, html) {
-    if (data.actor.type !== "character" && data.actor.type !== "npc") return;
-    if (data.actor.type === "npc" && data.actor.getFlag("core", "sheetClass") !== "pf1.ActorSheetPFNPC") return;
-    if (app._forceShowVeilTab === undefined) app._forceShowVeilTab = false;
-    if (app._forceShowVeilList === undefined) app._forceShowVeilList = false;
-    if (app._forceShowVeilTab) {
-        app.activateTab("akashic-magic", "primary");
-        setTimeout(() => app._forceShowVeilTab = false, 100);
-    }
-    if (app._forceShowVeilList) {
-        const listDiv = html.find(".veil-list")[0];
-        if (listDiv) {
-            listDiv.style.maxHeight = `${listDiv.scrollHeight - 50}px`;
-            if (!listDiv.classList.contains("open"))
-                listDiv.classList.add("open");
-        }
-    }
-    // Check if we should show the veil tab (either veilweaver or forced open, but not if hidden)
-    const forceTabOpen = data.actor.getFlag(MODULE_ID, "forceVeilTabOpen");
-    const isVeilweaver = data.actor.getFlag(MODULE_ID, "veilweaver");
-    const hideTab = data.actor.getFlag(MODULE_ID, "nonVeilweaver");
-    const shouldShowTab = (isVeilweaver || forceTabOpen) && !hideTab;
-    if (!shouldShowTab) return;
-    if (data.actor.flags?.core?.sheetClass === "pf1alt.AltActorSheetPFCharacter") {
-        renderAltActorHook(data, app, html);
-        return;
-    }
-    injectAkashicMagicDiv(app, html);
-    injectHideVeilTabCheckbox(app, html, data.actor);
-    injectForceVeilTabOpenCheckbox(app, html, data.actor);
-    injectVeilweavingAttrSelector(app, html, data.actor);
+
+export function renderAltActorHook(data, app, html) {
     injectAkashicTab(app, html);
-    addControlHandlers(app, html);
-}
-
-function injectAkashicMagicDiv(app, html) {
-	const controls = html.find(".settings")[0];
-	const div = document.createElement("div");
-	div.classList.add("akashic-magic-div");
-	const h2 = document.createElement("h2");
-	h2.innerText = game.i18n.localize("AkashicMagic.Config.Name");
-	div.append(h2);
-	if (controls.children.length > 1) {
-		controls.insertBefore(div, controls.children[controls.children.length - 1]);
-	} else {
-		controls.append(div);
-	}
-	const formGroup = document.createElement("div");
-	formGroup.classList.add("form-group", "stacked");
-	div.append(formGroup);
-}
-
-function injectVeilweavingAttrSelector(app, html, actor) {
-	const div = document.createElement("div");
-	div.classList.add("form-group", "col-6", "flexrow", "veilweavingAttrSelector");
-	let controls = html.find(".akashic-magic-div")[0];
-	const select = document.createElement("select");
-	select.name = `flags.${MODULE_ID}.veilweavingAttr`;
-	const label = document.createElement("label");
-	label.innerText = game.i18n.localize("AkashicMagic.Attributes.veilweavingAttr");
-	label.setAttribute("for", select.name);
-	label.setAttribute("data-tooltip", game.i18n.localize("AkashicMagic.Attributes.veilweavingAttrTooltip"));
-	const options = [];
-	Object.entries(pf1.config.abilities).forEach(([key, value]) => {
-		options.push({ value: key, label: value });
-	});
-	if (!actor.flags[MODULE_ID] || !actor.flags[MODULE_ID].veilweavingAttr)
-		actor.setFlag(MODULE_ID, "veilweavingAttr", "int");
-	let hasContent = false;
-	for (const prop in actor.flags) {
-		if (Object.hasOwn(actor.flags, prop))
-			hasContent = true;
-	}
-	for (let option of options) {
-		const opt = document.createElement("option");
-		opt.value = option.value;
-		opt.innerText = option.label;
-		if (hasContent && option.value === actor.flags[MODULE_ID].veilweavingAttr) {
-			opt.selected = true;
-		}
-		select.append(opt);
-	}
-	select.setAttribute("data-tooltip", game.i18n.localize("AkashicMagic.Attributes.veilweavingAttrTooltip"));
-	div.append(label);
-	div.append(select);
-	if (controls.children.length > 1) {
-		controls.insertBefore(div, controls.children[controls.children.length - 1]);
-	}
-	else {
-		controls.append(div);
-	}
-}
-
-export function injectHideVeilTabCheckbox(app, html, currentActor) {
-	let controls = html.find(".akashic-magic-div .stacked")[0];
-	const checkbox = document.createElement("input");
-	checkbox.type = "checkbox";
-	checkbox.name = `flags.${MODULE_ID}.nonVeilweaver`;
-	checkbox.id = checkbox.name;
-	const label = document.createElement("label");
-	label.append(checkbox);
-	label.append(game.i18n.localize("AkashicMagic.Config.HideVeilTab"));
-	label.classList.add("checkbox");
-	if (!currentActor.flags[MODULE_ID] || !currentActor.flags[MODULE_ID].nonVeilweaver)
-		currentActor.setFlag(MODULE_ID, "nonVeilweaver", false);
-	if (currentActor.flags[MODULE_ID].nonVeilweaver) {
-		checkbox.checked = true;
-	}
-	controls.append(label);
-}
-
-export function injectForceVeilTabOpenCheckbox(app, html, currentActor) {
-	let controls = html.find(".akashic-magic-div .stacked")[0];
-	const checkbox = document.createElement("input");
-	checkbox.type = "checkbox";
-	checkbox.name = `flags.${MODULE_ID}.forceVeilTabOpen`;
-	checkbox.id = checkbox.name;
-	const label = document.createElement("label");
-	label.append(checkbox);
-	label.append(game.i18n.localize("AkashicMagic.Config.ForceVeilTabOpen"));
-	label.classList.add("checkbox");
-	if (!currentActor.flags[MODULE_ID] || !currentActor.flags[MODULE_ID].forceVeilTabOpen)
-		currentActor.setFlag(MODULE_ID, "forceVeilTabOpen", false);
-	if (currentActor.flags[MODULE_ID].forceVeilTabOpen) {
-		checkbox.checked = true;
-	}
-	controls.append(label);
+    addControlHandlers(app, html);    
 }
 
 function injectAkashicTab(app, html) {
@@ -139,15 +15,15 @@ function injectAkashicTab(app, html) {
     // Show tab if actor is a veilweaver OR if force open is enabled
     if (actor.getFlag("akashic-magic", "veilweaver") || actor.getFlag("akashic-magic", "forceVeilTabOpen")) {
         const tabSelector = html.find("a[data-tab=skills]");
-        const artsTab = document.createElement("a");
-        artsTab.classList.add("item");
-        artsTab.dataset["tab"] = "akashic-magic";
-        artsTab.dataset["group"] = "primary";
-        artsTab.innerHTML = game.i18n.localize("AkashicMagic.TabName");
-        tabSelector.after(artsTab);
+        const veilsTab = document.createElement("a");
+        veilsTab.classList.add("item");
+        veilsTab.dataset["tab"] = "akashic-magic";
+        veilsTab.dataset["group"] = "primary";
+        veilsTab.innerHTML = game.i18n.localize("AkashicMagic.TabName");
+        tabSelector.after(veilsTab);
 
         const akashicBody = createTemplate(
-            'akashic-magic',
+            'akashic-magic-alt',
             {
                 actor: actor,
             }
@@ -268,4 +144,63 @@ function addControlHandlers(app, html) {
             }
         });
     });
+}
+
+export function injectAltAkashicMagicDiv(app, html, data) {
+    const targetBlock = html.find(".form-group.stacked:contains('Saving Throws')");
+
+    const hideVeilTab = data.actor.getFlag(MODULE_ID, "nonVeilweaver") || false;
+    const forceVeilTabOpen = data.actor.getFlag(MODULE_ID, "forceVeilTabOpen") || false;
+    const veilweavingAttr = data.actor.getFlag(MODULE_ID, "veilweavingAttr") || "int";
+    const forceTabOpen = data.actor.getFlag(MODULE_ID, "forceVeilTabOpen");
+    const isVeilweaver = data.actor.getFlag(MODULE_ID, "veilweaver");
+    const hideTab = data.actor.getFlag(MODULE_ID, "nonVeilweaver");
+    const shouldShowTab = (isVeilweaver || forceTabOpen) && !hideTab;
+
+
+    let veilweavingAttrHtml = "";
+
+    if (shouldShowTab) {
+        const abilityOptions = Object.entries(pf1.config.abilities).map(([key, label]) => {
+            const isSelected = (key === veilweavingAttr) ? "selected" : "";
+            return `<option value="${key}" ${isSelected}>${label}</option>`;
+        }).join("");
+
+        veilweavingAttrHtml = `
+            <div class="flexrow" data-tooltip="${game.i18n.localize("AkashicMagic.Attributes.veilweavingAttrTooltip")}">
+                <label class="cell left-label half" for="flags.${MODULE_ID}.veilweavingAttr">
+                    ${game.i18n.localize("AkashicMagic.Attributes.veilweavingAttr")}
+                </label>
+                <select class="cell midsize half" name="flags.${MODULE_ID}.veilweavingAttr">
+                    ${abilityOptions}
+                </select>
+            </div>
+        `;
+    }
+
+    const akashicSection = $(`
+        <div class="form-group stacked akashic-magic-div">
+            <div class="flexrow">
+                <h2>${game.i18n.localize("AkashicMagic.Config.Name")}</h2>
+            </div>
+            
+            ${veilweavingAttrHtml}
+
+            <div class="form-group stacked">
+                <label class="checkbox">
+                    <input type="checkbox" name="flags.${MODULE_ID}.nonVeilweaver" ${hideVeilTab ? "checked" : ""}>
+                    ${game.i18n.localize("AkashicMagic.Config.HideVeilTab")}
+                </label>
+            </div>
+
+            <div class="form-group stacked">
+                <label class="checkbox">
+                    <input type="checkbox" name="flags.${MODULE_ID}.forceVeilTabOpen" ${forceVeilTabOpen ? "checked" : ""}>
+                    ${game.i18n.localize("AkashicMagic.Config.ForceVeilTabOpen")}
+                </label>
+            </div>
+        </div>
+    `);
+
+    targetBlock.after(akashicSection);
 }

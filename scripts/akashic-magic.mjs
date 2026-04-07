@@ -7,10 +7,12 @@ import { setupHook } from "./hooks/setup.mjs";
 import { handleJumpingToSummary, injectVeilsButton } from "./utils.mjs";
 import { onGetRollData } from "./hooks/rollData.mjs";
 import { getChangeFlat } from "./hooks/changes.mjs";
+import { injectAltAkashicMagicDiv } from "./hooks/render/alt-sheet/compat.mjs";
 
 
 export const TEMPLATES = {
-    'akashic-magic': 'modules/akashic-magic/templates/actor/akashic-magic.hbs' // Akashic Magic Actor Sheet Tab
+    'akashic-magic': 'modules/akashic-magic/templates/actor/akashic-magic.hbs', // Akashic Magic Actor Sheet Tab
+	'akashic-magic-alt': 'modules/akashic-magic/templates/actor/alt-akashic-magic.hbs' // Akashic Magic Actor Sheet Tab for Alt Sheet Compatibility
 }
 
 /**
@@ -88,4 +90,17 @@ Hooks.on("pf1GetChangeFlat", getChangeFlat);
  */
 Hooks.once("libWrapper.Ready", () => {
 	handleJumpingToSummary();
+});
+
+/**
+ * Alt Sheet Compatibility hooks
+ */
+Hooks.on("renderSettingsEditor", (app, html, data) => {
+    console.log("Alt Sheet SettingsEditor just rendered!");
+    // 'app' is the SettingsEditor instance
+    // 'html' is the jQuery object of the window
+    // 'data' is the context object passed to the Handlebars template
+    
+    // Example: Add a custom button to the sheet
+    injectAltAkashicMagicDiv(app, html, data);
 });

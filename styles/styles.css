@@ -4,6 +4,15 @@
     gap: 3px;
 }
 
+.veils-configuration-alt {
+    border-top: 2px groove var(--pf1alt-border-color);
+    border-bottom: 2px groove var(--pf1alt-border-color);
+}
+
+.veil-body {
+    padding-left: 0 !important;
+}
+
 .accordion {
     width: 100%;
     border: none;
@@ -22,8 +31,10 @@
     line-height: 1.5;
     gap: 3px;
     overflow: auto;
-    -ms-overflow-style: none;  /* IE and Edge */
-    scrollbar-width: none;  /* Firefox */
+    -ms-overflow-style: none;
+    /* IE and Edge */
+    scrollbar-width: none;
+    /* Firefox */
 }
 
 .accordion::-webkit-scrollbar {
