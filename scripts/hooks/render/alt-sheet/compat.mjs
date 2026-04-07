@@ -6,7 +6,19 @@ import { cleanDice, getVeilDocument } from "../../../utils.mjs";
 
 export function renderAltActorHook(data, app, html) {
     injectAkashicTab(app, html);
-    addControlHandlers(app, html);    
+    addControlHandlers(app, html);  
+    if (app._forceShowVeilTab) {
+        data.actor.sheet.activateTab("akashic-magic");
+        setTimeout(() => app._forceShowVeilTab = false, 100);
+    }
+    if (app._forceShowVeilList) {
+        const listDiv = html.find(".veil-list")[0];
+        if (listDiv) {
+            listDiv.style.maxHeight = `${listDiv.scrollHeight - 50}px`;
+            if (!listDiv.classList.contains("open"))
+                listDiv.classList.add("open");
+        }
+    }  
 }
 
 function injectAkashicTab(app, html) {
@@ -149,6 +161,7 @@ function addControlHandlers(app, html) {
 export function injectAltAkashicMagicDiv(app, html, data) {
     const targetBlock = html.find(".form-group.stacked:contains('Saving Throws')");
 
+    // 1. Read the flags safely
     const hideVeilTab = data.actor.getFlag(MODULE_ID, "nonVeilweaver") || false;
     const forceVeilTabOpen = data.actor.getFlag(MODULE_ID, "forceVeilTabOpen") || false;
     const veilweavingAttr = data.actor.getFlag(MODULE_ID, "veilweavingAttr") || "int";
@@ -158,6 +171,7 @@ export function injectAltAkashicMagicDiv(app, html, data) {
     const shouldShowTab = (isVeilweaver || forceTabOpen) && !hideTab;
 
 
+    // 2. Conditionally build the Dropdown HTML
     let veilweavingAttrHtml = "";
 
     if (shouldShowTab) {
@@ -178,6 +192,9 @@ export function injectAltAkashicMagicDiv(app, html, data) {
         `;
     }
 
+    // 3. Build the entire section
+    // We inject ${veilweavingAttrHtml} right below the header. 
+    // If they aren't a veilweaver, it just injects an empty string.
     const akashicSection = $(`
         <div class="form-group stacked akashic-magic-div">
             <div class="flexrow">
@@ -202,5 +219,6 @@ export function injectAltAkashicMagicDiv(app, html, data) {
         </div>
     `);
 
+    // 4. Inject it all
     targetBlock.after(akashicSection);
 }

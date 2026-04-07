@@ -9,18 +9,6 @@ export function renderActorHook(data, app, html) {
     if (data.actor.type === "npc" && data.actor.getFlag("core", "sheetClass") !== "pf1.ActorSheetPFNPC") return;
     if (app._forceShowVeilTab === undefined) app._forceShowVeilTab = false;
     if (app._forceShowVeilList === undefined) app._forceShowVeilList = false;
-    if (app._forceShowVeilTab) {
-        app.activateTab("akashic-magic", "primary");
-        setTimeout(() => app._forceShowVeilTab = false, 100);
-    }
-    if (app._forceShowVeilList) {
-        const listDiv = html.find(".veil-list")[0];
-        if (listDiv) {
-            listDiv.style.maxHeight = `${listDiv.scrollHeight - 50}px`;
-            if (!listDiv.classList.contains("open"))
-                listDiv.classList.add("open");
-        }
-    }
     // Check if we should show the veil tab (either veilweaver or forced open, but not if hidden)
     const forceTabOpen = data.actor.getFlag(MODULE_ID, "forceVeilTabOpen");
     const isVeilweaver = data.actor.getFlag(MODULE_ID, "veilweaver");
@@ -37,6 +25,18 @@ export function renderActorHook(data, app, html) {
     injectVeilweavingAttrSelector(app, html, data.actor);
     injectAkashicTab(app, html);
     addControlHandlers(app, html);
+    if (app._forceShowVeilTab) {
+        data.actor.sheet.activateTab("akashic-magic");
+        setTimeout(() => app._forceShowVeilTab = false, 100);
+    }
+    if (app._forceShowVeilList) {
+        const listDiv = html.find(".veil-list")[0];
+        if (listDiv) {
+            listDiv.style.maxHeight = `${listDiv.scrollHeight - 50}px`;
+            if (!listDiv.classList.contains("open"))
+                listDiv.classList.add("open");
+        }
+    }
 }
 
 function injectAkashicMagicDiv(app, html) {
