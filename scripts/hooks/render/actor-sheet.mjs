@@ -15,10 +15,20 @@ export function renderActorHook(data, app, html) {
     const hideTab = data.actor.getFlag(MODULE_ID, "nonVeilweaver");
     const shouldShowTab = (isVeilweaver || forceTabOpen) && !hideTab;
     if (!shouldShowTab) return;
-    if (data.actor.flags?.core?.sheetClass === "pf1alt.AltActorSheetPFCharacter") {
-        renderAltActorHook(data, app, html);
-        return;
-    }
+
+	const actor = data.actor;
+    const sheetClass = actor.getFlag("core", "sheetClass");
+	const altActorSheetClasses = ["pf1alt.AltActorSheetPFNPC", "pf1alt.AltActorSheetPFCharacter"];
+	const defaultSheet = CONFIG.Actor.sheetClasses.character;
+	let isAltSheet = false;
+	if ((defaultSheet["pf1alt.AltActorSheetPFCharacter"]?.default || defaultSheet["pf1alt.AltActorSheetPFNPC"]?.default)
+		&& (!sheetClass || altActorSheetClasses.includes(sheetClass)))
+		isAltSheet = true;
+	if (isAltSheet || altActorSheetClasses.includes(sheetClass)) {
+		renderAltActorHook(data, app, html);
+		return;
+	}
+	
     injectAkashicMagicDiv(app, html);
     injectHideVeilTabCheckbox(app, html, data.actor);
     injectForceVeilTabOpenCheckbox(app, html, data.actor);
