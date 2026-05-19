@@ -25,13 +25,6 @@ export function onGetRollData(doc, rollData) {
                 const hasVeilFeat = subtype === "feat" && /\bveil\b/i.test(name);
                 const isAkashicClass = akashicClasses.has(name);
 
-                if (hasVeilweaving)
-                    console.info("Found veilweaving on item:", i.name, "actor:", actor.name);
-                if (hasVeilFeat)
-                    console.info("Found veil feat on item:", i.name, "actor:", actor.name);
-                if (isAkashicClass)
-                    console.info("Found akashic class on item:", i.name, "actor:", actor.name);
-
                 return hasVeilweaving || hasVeilFeat || isAkashicClass;
             }) || actor.getFlag(MODULE_ID, "forceVeilTabOpen") || hasVeils;
 
