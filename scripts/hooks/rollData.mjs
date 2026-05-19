@@ -33,7 +33,7 @@ export function onGetRollData(doc, rollData) {
                     console.info("Found akashic class on item:", i.name, "actor:", actor.name);
 
                 return hasVeilweaving || hasVeilFeat || isAkashicClass;
-            }) || actor.getFlag(MODULE_ID, "forceVeilTabOpen");
+            }) || actor.getFlag(MODULE_ID, "forceVeilTabOpen") || hasVeils;
 
 
             if (hasVeils || isVeilweaver)
