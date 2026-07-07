@@ -30,9 +30,9 @@ export function onGetRollData(doc, rollData) {
 
 
             if (hasVeils || isVeilweaver)
-                actor.setFlag(MODULE_ID, "veilweaver", true);
+                rollData.akasha.isVeilweaver = true;
             else {
-                actor.setFlag(MODULE_ID, "veilweaver", false);
+                rollData.akasha.isVeilweaver = false;
                 return;
             }
 
